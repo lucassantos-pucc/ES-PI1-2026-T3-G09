@@ -1,9 +1,8 @@
-from conexao_banco import conectar
 from datetime import datetime
-from eleitordb import buscar_eleitor_por_cpf
-from sessao_votacaodb import buscar_sessao_aberta
-from candidatodb import buscar_candidato_por_numero
-from votarbd import inserir_voto, buscar_voto_por_eleitor_e_sessao
+from src.db.db_eleitor import buscar_eleitor_por_cpf
+from src.db.db_sessao_votacao import buscar_sessao_aberta
+from src.db.db_candidato import buscar_candidato_por_numero
+from src.db.dbvotar import inserir_voto, buscar_voto_por_eleitor_e_sessao
 
 def votar():
     print("\n===== VOTAR =====")
@@ -12,6 +11,7 @@ def votar():
     cpf4 = input("Digite os 4 primeiros dígitos do CPF: ")
     chave = input("Digite a chave de acesso: ")
 
+    # funcao dentro de db_eleitor
     eleitor = buscar_eleitor_por_cpf(titulo, cpf4, chave)
 
     if eleitor:

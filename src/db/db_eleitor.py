@@ -1,4 +1,4 @@
-from conexao_banco import conectar
+from src.conector.conexao_banco import conectar
 
 def inserir_eleitor(nome_completo, cpf, cpf_quatro_primeiros, titulo_eleitor, chave_acesso, eh_mesario, ja_votou, ativo):
     conexao = conectar()
@@ -98,7 +98,7 @@ def deletar_eleitor(cpf):
     cursor.close()
     conexao.close()
 
-    from conexao_banco import conectar
+    from src.conector.conexao_banco import conectar
 
 def buscar_mesario_para_abertura(titulo_eleitor, cpf_quatro_primeiros, chave_acesso):
     conexao = conectar()

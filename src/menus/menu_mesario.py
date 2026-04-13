@@ -1,11 +1,11 @@
-from conexao_banco import conectar
-from eleitordb import buscar_mesario_para_abertura
-from votar import votar
-from sessao_votacaodb import inserir_sessao_votacao
-from sessao_votacaodb import encerrar_sessao_votacao
-from sessao_votacaodb import buscar_sessao_aberta_por_mesario
-from sessao_votacaodb import buscar_sessao_aberta
-from sessao_votacaodb import listar_zeresima_por_sessao
+from src.conector.conexao_banco import conectar
+from src.db.db_eleitor import buscar_mesario_para_abertura
+from src.menus.menu_votar import votar
+from src.db.db_sessao_votacao import inserir_sessao_votacao
+from src.db.db_sessao_votacao import encerrar_sessao_votacao
+from src.db.db_sessao_votacao import buscar_sessao_aberta_por_mesario
+from src.db.db_sessao_votacao import buscar_sessao_aberta
+from src.db.db_sessao_votacao import listar_zeresima_por_sessao
 from datetime import datetime
 
 def menu_mesario():
@@ -17,6 +17,7 @@ def menu_mesario():
     opcao = ""
 
     while opcao != "0":
+
         print("\n===== MENU MESÁRIO =====")
         print("1 - ABRIR SISTEMA DE VOTAÇÃO")
         print("2 - AUDITORIA DA VOTAÇÃO")
@@ -30,7 +31,6 @@ def menu_mesario():
             case "1":
                 abrir_sistema_votacao()
 
-
             case "2":
                 auditoria_votacao()
 
@@ -40,15 +40,11 @@ def menu_mesario():
             case "4":
                 encerrar_sistema_votacao()
 
-
             case "0":
                 print("Voltando ao menu principal...")
-               
-
 
             case _:
                 print("Opção inválida")
-
     conexao.close()
 
 def abrir_sistema_votacao():

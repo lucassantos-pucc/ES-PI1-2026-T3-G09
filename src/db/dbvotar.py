@@ -1,4 +1,4 @@
-from conexao_banco import conectar
+from src.conector.conexao_banco import conectar
 
 def inserir_voto(id_eleitor, id_candidato, id_sessao, numero_digitado, tipo_voto, data_hora, protocolo):
     conexao = conectar()
