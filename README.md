@@ -25,4 +25,15 @@ conceitos matemáticos (como Álgebra Linear) voltados à proteção da informa�
 - Criptografia: Cifra de Hill 
 
 ## INSTRUÇÕES
----
+
+Para utilizar o software, é necessário executar o arquivo "script-BD" no seu MySQL instalado localmente.
+Em seguida, edite o arquivo "conexao_banco.py" e configure suas credenciais de acesso ao banco de dados.
+
+## ORGANIZACAO E LOGICA DO PROJETO:
+ORGANIZACAO E LOGICA DO PROJETO:
+
+A pasta src é dividida em três pastas e o arquivo main.py, cada um com seu devido propósito.
+O main.py é o ponto de inicial do programa, sendo responsável por inicializar o sistema.
+A pasta menus concentra toda a lógica relacionada à interface do usuário, incluindo a exibição de opções, entradas e validação dos dados.
+A pasta db reúne funções responsáveis pela interação com o banco de dados MySQL, sendo utilizada pelos menus para validar e armazenar informações.
+A pasta conector é responsável por estabelecer a conexão com o banco de dados, sendo utilizada pelos demais arquivos ao longo da execução do programa.
