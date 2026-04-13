@@ -29,8 +29,7 @@ conceitos matemáticos (como Álgebra Linear) voltados à proteção da informa�
 Para utilizar o software, é necessário executar o arquivo "script-BD" no seu MySQL instalado localmente.
 Em seguida, edite o arquivo "conexao_banco.py" e configure suas credenciais de acesso ao banco de dados.
 
-## ORGANIZACAO E LOGICA DO PROJETO:
-ORGANIZACAO E LOGICA DO PROJETO:
+## ORGANIZAÇÃO E LÓGICA DO PROJETO:
 
 A pasta src é dividida em três pastas e o arquivo main.py, cada um com seu devido propósito.
 O main.py é o ponto de inicial do programa, sendo responsável por inicializar o sistema.
