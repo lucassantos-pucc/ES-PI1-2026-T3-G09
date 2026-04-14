@@ -1,11 +1,11 @@
-from src.conector.conexao_banco import conectar
-from src.db.db_eleitor import buscar_mesario_para_abertura
-from src.menus.menu_votar import votar
-from src.db.db_sessao_votacao import inserir_sessao_votacao
-from src.db.db_sessao_votacao import encerrar_sessao_votacao
-from src.db.db_sessao_votacao import buscar_sessao_aberta_por_mesario
-from src.db.db_sessao_votacao import buscar_sessao_aberta
-from src.db.db_sessao_votacao import listar_zeresima_por_sessao
+from conector.conexao_banco import conectar
+from db.db_eleitor import buscar_mesario_para_abertura
+from menus.menu_votar import votar
+from db.db_sessao_votacao import inserir_sessao_votacao
+from db.db_sessao_votacao import encerrar_sessao_votacao
+from db.db_sessao_votacao import buscar_sessao_aberta_por_mesario
+from db.db_sessao_votacao import buscar_sessao_aberta
+from db.db_sessao_votacao import listar_zeresima_por_sessao
 from datetime import datetime
 
 def menu_mesario():

@@ -1,8 +1,8 @@
 from datetime import datetime
-from src.db.db_eleitor import buscar_eleitor_por_cpf
-from src.db.db_sessao_votacao import buscar_sessao_aberta
-from src.db.db_candidato import buscar_candidato_por_numero
-from src.db.dbvotar import inserir_voto, buscar_voto_por_eleitor_e_sessao
+from db.db_eleitor import buscar_eleitor_por_cpf
+from db.db_sessao_votacao import buscar_sessao_aberta
+from db.db_candidato import buscar_candidato_por_numero
+from db.dbvotar import inserir_voto, buscar_voto_por_eleitor_e_sessao
 
 def votar():
     print("\n===== VOTAR =====")

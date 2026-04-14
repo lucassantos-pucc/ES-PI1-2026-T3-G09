@@ -1,9 +1,9 @@
-from src.conector.conexao_banco import conectar
-from src.menus.menu_eleitor import menu_eleitor
-from src.menus.menu_mesario import menu_mesario
-from src.menus.menu_votar import votar
-from src.menus.menu_votar import ver_informacoes_voto
-from src.db.db_sessao_votacao import buscar_sessao_aberta
+from conector.conexao_banco import conectar
+from menus.menu_eleitor import menu_eleitor
+from menus.menu_mesario import menu_mesario
+from menus.menu_votar import votar
+from menus.menu_votar import ver_informacoes_voto
+from db.db_sessao_votacao import buscar_sessao_aberta
 
 
 

@@ -1,4 +1,4 @@
-from src.conector.conexao_banco import conectar
+from conector.conexao_banco import conectar
 
 def menu_eleitor():
     conexao = conectar()

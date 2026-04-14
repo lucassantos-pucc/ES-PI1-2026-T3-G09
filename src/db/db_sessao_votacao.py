@@ -1,4 +1,4 @@
-from src.conector.conexao_banco import conectar
+from conector.conexao_banco import conectar
 from datetime import datetime
 
 def inserir_sessao_votacao(aberta, data_abertura, id_mesario_abertura, data_encerramento, id_mesario_encerramento):
@@ -87,7 +87,7 @@ def buscar_sessao_aberta():
     return resultado
 
 
-from src.conector.conexao_banco import conectar
+from conector.conexao_banco import conectar
 
 def listar_zeresima_por_sessao(id_sessao):
     conexao = conectar()
