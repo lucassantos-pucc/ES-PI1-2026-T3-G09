@@ -82,7 +82,7 @@ def atualizar_eleitor(nome_completo, cpf, cpf_quatro_primeiros, titulo_eleitor, 
 
 
 
-   
+
 
 def deletar_eleitor(cpf):
     conexao = conectar()
