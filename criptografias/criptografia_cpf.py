@@ -1,5 +1,18 @@
 
 def codificar_cpf(cpfstring):
+    """
+    Criptografa um CPF usando Logica da Cifra de Hill.
+
+    Args:
+        cpfstring (str): CPF do usuario (somente Numeros)
+    
+    Returns:
+        str: CPF do usuario criptografado em formato string
+
+    """
+    #Logica -----------
+
+
     cpf = []
     contador = 0
     while (contador < len(cpfstring)):
@@ -75,6 +88,20 @@ def codificar_cpf(cpfstring):
     return resultado
 
 def decodificar_cpf(cpfCriptografado):
+    """
+    Descriptografa o CPF criptografado.
+
+    Args:
+        cpfCriptografado (str): CPF do usuario criptografado.
+    
+    Returns:
+        str: CPF do usuario em formato string
+
+    """
+
+    #Logica -----------
+
+
     matrizCpfDecodificado = []
     
     chaveInversa = [[1,8,21], [21,12,8], [21,7,7]]
@@ -154,5 +181,5 @@ def decodificar_cpf(cpfCriptografado):
         contador += 1
 
     # remove o ultimo valor adicionado na codificação
-    resultado = resultado[:-1] #removendo valor adicional para calclos de matriz (valor 14 no final da string)
+    resultado = resultado[:-1] #removendo valor adicional para calculos de matriz 
     return resultado
