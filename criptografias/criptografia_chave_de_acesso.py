@@ -1,36 +1,46 @@
-
-def codificar_cpf(cpfstring):
+def codificar_chave_de_acesso(chaveDeAcessoString):
     """
-    Criptografa um CPF usando Logica da Cifra de Hill.
+    Criptografa uma Chave de Acesso usando Logica da Cifra de Hill.
 
     Args:
-        cpfstring (str): CPF do usuario (somente Numeros)
+        chaveDeAcessoString (str): Chave de acesso do usuario.
     
     Returns:
-        resultado (str): CPF do usuario criptografado em formato string
+        resultado (str): Chave de acesso do usuario criptografado em formato string
 
     """
     #Logica -----------
-
-
-    #pega o cpf em string e passa pra uma matriz
-    cpf = []
+    #deixa a entrada com todas as letras em caixa alta
+    chaveDeAcessoString = chaveDeAcessoString.upper()
+    #pega a chave de acesso em string e passa pra uma matriz
+    chaveAcesso = []
     contador = 0
-    while (contador < len(cpfstring)):
-        cpf.append(int(cpfstring[contador]))
-        contador += 1
+    while (contador < len(chaveDeAcessoString)):
+        chaveAcesso.append(chaveDeAcessoString[contador])
+        contador +=1
 
-    matrizCpfCriptografado = []
+
+    #converter 3 primeiras letras para numeros
+    contador2 = 0
+
+    while(contador2 < 3):
+        chaveAcesso[contador2] = ord(chaveAcesso[contador2]) - ord('A')
+        contador2 +=1
+
+    #comecando criptografia
+
+    matrizChaveAcessoCriptografada = []
     resultado = ""
 
-    #chave escolhida
+    #chave escolhida para criptografar
     chave = [[11,8,3],[7,6,2],[10,5,9]]
-    
-    # quebra o cpf em 4 vetores 1x3
-    vetor1 = [[cpf[0]],[cpf[1]],[cpf[2]]]
-    vetor2 = [[cpf[3]],[cpf[4]],[cpf[5]]]
-    vetor3 = [[cpf[6]],[cpf[7]],[cpf[8]]]
-    vetor4 = [[cpf[9]],[cpf[10]],[1]] # adicionando mais um numero para quebrar em vetores de 3x1
+
+    #3x3 pra multiplicar tem q ter 3 colunas
+
+    #quebrando a chaveAcesso em 4 vetores
+    vetor1 = [[chaveAcesso[0]],[chaveAcesso[1]],[chaveAcesso[2]]]
+    vetor2 = [[int(chaveAcesso[3])],[int(chaveAcesso[4])],[int(chaveAcesso[5])]]
+    vetor3 = [[int(chaveAcesso[6])],[1],[1]] #adicionando 2 valores para preencher o espaço vazio
 
     #criptografando
     codificado1 = [
@@ -50,24 +60,17 @@ def codificar_cpf(cpfstring):
         (chave[1][0]*vetor3[0][0] + chave[1][1]*vetor3[1][0] + chave[1][2]*vetor3[2][0]) % 26,
         (chave[2][0]*vetor3[0][0] + chave[2][1]*vetor3[1][0] + chave[2][2]*vetor3[2][0]) % 26
     ]
-    
-    codificado4 = [
-        (chave[0][0]*vetor4[0][0] + chave[0][1]*vetor4[1][0] + chave[0][2]*vetor4[2][0]) % 26,
-        (chave[1][0]*vetor4[0][0] + chave[1][1]*vetor4[1][0] + chave[1][2]*vetor4[2][0]) % 26,
-        (chave[2][0]*vetor4[0][0] + chave[2][1]*vetor4[1][0] + chave[2][2]*vetor4[2][0]) % 26
-    ]
 
-    #adicionando vetores para matriz criptografada
-    matrizCpfCriptografado.append(codificado1)
-    matrizCpfCriptografado.append(codificado2)
-    matrizCpfCriptografado.append(codificado3)
-    matrizCpfCriptografado.append(codificado4)
+    #adicionando vetores a matriz criptografada
+    matrizChaveAcessoCriptografada.append(codificado1)
+    matrizChaveAcessoCriptografada.append(codificado2)
+    matrizChaveAcessoCriptografada.append(codificado3)
 
-    # convertendos valores para letras, deixando igual ao exemplo: A5H2K9L1P8M
+    # convertendos valores para letras, deixando igual ao exemplo: X9B27J1
     letra = True
     contador = 0
-    while (contador < 4):
-        linha = matrizCpfCriptografado[contador]
+    while (contador < 3):
+        linha = matrizChaveAcessoCriptografada[contador]
         contador2 = 0
 
         while (contador2 < 3):
@@ -88,42 +91,41 @@ def codificar_cpf(cpfstring):
 
     return resultado
 
-def decodificar_cpf(cpfCriptografado):
+def decodificar_chave_de_acesso(chaveAcessoCriptografada):
     """
-    Descriptografa o CPF criptografado.
+    Descriptografa a chave de acesso criptografada.
 
     Args:
-        cpfCriptografado (str): CPF do usuario criptografado.
+        chaveAcessoCriptografada (str): chave de acesso do usuario criptografada.
     
     Returns:
-        str: CPF do usuario em formato string
+        resultado (str): chave de acesso do usuario em formato string
 
     """
 
-    #Logica -----------
+    #Logica ------------
 
+    matrizChaveAcessoDecodificada = []
 
-    matrizCpfDecodificado = []
-    
     chaveInversa = [[1,8,21], [21,12,8], [21,7,7]]
 
     # inversão de letras/números
     contador = 0
     numerosCriptografados = []
-    tamanho = len(cpfCriptografado)
+    tamanho = len(chaveAcessoCriptografada)
     letra = True
     while (contador < tamanho):
 
         if(letra == True):
             # para converter letra em numero
-            numerosCriptografados.append(ord(cpfCriptografado[contador]) - ord('A'))
+            numerosCriptografados.append(ord(chaveAcessoCriptografada[contador]) - ord('A'))
             letra = False
             contador += 1
         else:
             # para numeros de 1 ou 2 digitos
             numero = ""
-            while contador < tamanho and cpfCriptografado[contador].isdigit():
-                numero += cpfCriptografado[contador]
+            while contador < tamanho and chaveAcessoCriptografada[contador].isdigit():
+                numero += chaveAcessoCriptografada[contador]
                 contador += 1
             
             #condição para n adicionar variavel "numero" sendo vazio
@@ -133,13 +135,9 @@ def decodificar_cpf(cpfCriptografado):
             else:
                 contador+=1
             
-
-
-    # quebra o cpfCriptografado em 4 vetores 1x3
     vetor1 = [[numerosCriptografados[0]],[numerosCriptografados[1]],[numerosCriptografados[2]]]
     vetor2 = [[numerosCriptografados[3]],[numerosCriptografados[4]],[numerosCriptografados[5]]]
-    vetor3 = [[numerosCriptografados[6]],[numerosCriptografados[7]],[numerosCriptografados[8]]]
-    vetor4 = [[numerosCriptografados[9]],[numerosCriptografados[10]],[numerosCriptografados[11]]] # adicionando valor para contas de matriz
+    vetor3 = [[numerosCriptografados[6]],[1],[1]] # adicionando valores para tampar buraco e fazer contas de matriz
 
     decodificado1 = [
         (chaveInversa[0][0]*vetor1[0][0] + chaveInversa[0][1]*vetor1[1][0] + chaveInversa[0][2]*vetor1[2][0]) % 26,
@@ -158,30 +156,34 @@ def decodificar_cpf(cpfCriptografado):
         (chaveInversa[1][0]*vetor3[0][0] + chaveInversa[1][1]*vetor3[1][0] + chaveInversa[1][2]*vetor3[2][0]) % 26,
         (chaveInversa[2][0]*vetor3[0][0] + chaveInversa[2][1]*vetor3[1][0] + chaveInversa[2][2]*vetor3[2][0]) % 26
     ]
-    
-    decodificado4 = [
-        (chaveInversa[0][0]*vetor4[0][0] + chaveInversa[0][1]*vetor4[1][0] + chaveInversa[0][2]*vetor4[2][0]) % 26,
-        (chaveInversa[1][0]*vetor4[0][0] + chaveInversa[1][1]*vetor4[1][0] + chaveInversa[1][2]*vetor4[2][0]) % 26,
-        (chaveInversa[2][0]*vetor4[0][0] + chaveInversa[2][1]*vetor4[1][0] + chaveInversa[2][2]*vetor4[2][0]) % 26
-    ]
 
-    matrizCpfDecodificado.append(decodificado1)
-    matrizCpfDecodificado.append(decodificado2)
-    matrizCpfDecodificado.append(decodificado3)
-    matrizCpfDecodificado.append(decodificado4)
+
+    #converter 3 primeiros numeros para letras
+    contador2 = 0
+
+    while(contador2 < 3):
+        decodificado1[contador2] = chr(decodificado1[contador2] + ord('A')) 
+        contador2 += 1
+
+    matrizChaveAcessoDecodificada.append(decodificado1)
+    matrizChaveAcessoDecodificada.append(decodificado2)
+    matrizChaveAcessoDecodificada.append(decodificado3)
+
+    
 
     #transformando a matriz em string
     contador = 0
     resultado = ""
-    while (contador < 4):
-        linha = matrizCpfDecodificado[contador]
+    while (contador < 3):
+        linha = matrizChaveAcessoDecodificada[contador]
         contador2 = 0
         while (contador2 < 3):
             caractere = linha[contador2]
             resultado += str(caractere)
             contador2 += 1
         contador += 1
-
-    # remove o ultimo valor adicionado na codificação
-    resultado = resultado[:-1] 
+    
+    # remove os ultimos valores adicionados na codificação
+    resultado = resultado[:-2]
     return resultado
+
