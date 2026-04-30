@@ -17,7 +17,7 @@ conceitos matemáticos (como Álgebra Linear) voltados à proteção da informa�
 
 ## TECNOLOGIAS UTILIZADAS
 
-- IDE para desenvolvimento: VSCode e PyCharm
+- IDE para desenvolvimento: VSCode
 - Linguagem de programação: Python
 - Banco de Dados: MySQL
 - Repositório: Git com Github
@@ -31,6 +31,7 @@ Em seguida, edite o arquivo "conexao_banco.py" e configure suas credenciais de a
 
 ## ORGANIZAÇÃO E LÓGICA DO PROJETO:
 
+O paragrafo abaixo esta desuatalizado, pois o menu sera reformulado no futuro
 A pasta src é dividida em três pastas e o arquivo main.py, cada um com seu devido propósito.
 O main.py é o ponto de inicial do programa, sendo responsável por inicializar o sistema.
 A pasta menus concentra toda a lógica relacionada à interface do usuário, incluindo a exibição de opções, entradas e validação dos dados.
