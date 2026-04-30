@@ -40,4 +40,4 @@ O main.py é o ponto de inicial do programa, sendo responsável por inicializar 
 A pasta menus concentra toda a lógica relacionada à interface do usuário, incluindo a exibição de opções, entradas e validação dos dados.
 A pasta db reúne funções responsáveis pela interação com o banco de dados MySQL, sendo utilizada pelos menus para validar e armazenar informações.
 A pasta conector é responsável por estabelecer a conexão com o banco de dados, sendo utilizada pelos demais arquivos ao longo da execução do programa.
-Mapa mental: https://www.canva.com/design/DAHEa11wZ6k/cTQVT0mOsx51UWbOSEnmmg/edit
+
