@@ -31,6 +31,8 @@ Em seguida, edite o arquivo "conexao_banco.py" e configure suas credenciais de a
 
 ## ORGANIZAÇÃO E LÓGICA DO PROJETO:
 
+Fluxograma do menu (desatualizado): https://www.canva.com/design/DAHEa11wZ6k/cTQVT0mOsx51UWbOSEnmmg/edit
+Fluxograma do novo medu (ainda nao implementado): https://www.canva.com/design/DAHIJxW1Yr4/8hzZ8onuWrnFTequOh2Z0g/edit
 O paragrafo abaixo esta desuatalizado, pois o menu sera reformulado no futuro
 A pasta src é dividida em três pastas e o arquivo main.py, cada um com seu devido propósito.
 O main.py é o ponto de inicial do programa, sendo responsável por inicializar o sistema.
