@@ -1,4 +1,3 @@
-
 def codificar_cpf(cpfstring):
     """
     Criptografa um CPF usando Logica da Cifra de Hill.
@@ -7,84 +6,82 @@ def codificar_cpf(cpfstring):
         cpfstring (str): CPF do usuario (somente Numeros)
     
     Returns:
-        str: CPF do usuario criptografado em formato string
+        resultado (str): CPF do usuario criptografado em formato string
 
     """
     #Logica -----------
 
+    alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
+
+    #pega o cpf em string e passa pra uma matriz de acordo com o indice do alfabeto
     cpf = []
     contador = 0
+    caractere = ""
+    valorCorrespondente = 0
     while (contador < len(cpfstring)):
-        cpf.append(int(cpfstring[contador]))
+        caractere= cpfstring[contador]
+        valorCorrespondente = alfabeto.index(caractere)
+        cpf.append(valorCorrespondente)
         contador += 1
 
     matrizCpfCriptografado = []
     resultado = ""
 
     #chave escolhida
-    chave = [[11,8,3],[7,6,2],[10,5,9]]
+    chave = [[1, 2, 3],[0, 1, 4],[5, 6, 0]]
     
-    # adicionando mais um numero ao cpf para quebrar em vetores de 3x1
-
     # quebra o cpf em 4 vetores 1x3
     vetor1 = [[cpf[0]],[cpf[1]],[cpf[2]]]
     vetor2 = [[cpf[3]],[cpf[4]],[cpf[5]]]
     vetor3 = [[cpf[6]],[cpf[7]],[cpf[8]]]
-    vetor4 = [[cpf[9]],[cpf[10]],[1]] # adicionando mais um numero para quebrar em vetores de 3x1
+    vetor4 = [[cpf[9]],[cpf[10]],[0]] # adicionando mais um numero para quebrar em vetores de 3x1
 
+    #criptografando
     codificado1 = [
-        (chave[0][0]*vetor1[0][0] + chave[0][1]*vetor1[1][0] + chave[0][2]*vetor1[2][0]) % 26,
-        (chave[1][0]*vetor1[0][0] + chave[1][1]*vetor1[1][0] + chave[1][2]*vetor1[2][0]) % 26,
-        (chave[2][0]*vetor1[0][0] + chave[2][1]*vetor1[1][0] + chave[2][2]*vetor1[2][0]) % 26
+        (chave[0][0]*vetor1[0][0] + chave[0][1]*vetor1[1][0] + chave[0][2]*vetor1[2][0]) % 36,
+        (chave[1][0]*vetor1[0][0] + chave[1][1]*vetor1[1][0] + chave[1][2]*vetor1[2][0]) % 36,
+        (chave[2][0]*vetor1[0][0] + chave[2][1]*vetor1[1][0] + chave[2][2]*vetor1[2][0]) % 36
     ]
 
     codificado2 = [
-        (chave[0][0]*vetor2[0][0] + chave[0][1]*vetor2[1][0] + chave[0][2]*vetor2[2][0]) % 26,
-        (chave[1][0]*vetor2[0][0] + chave[1][1]*vetor2[1][0] + chave[1][2]*vetor2[2][0]) % 26,
-        (chave[2][0]*vetor2[0][0] + chave[2][1]*vetor2[1][0] + chave[2][2]*vetor2[2][0]) % 26
+        (chave[0][0]*vetor2[0][0] + chave[0][1]*vetor2[1][0] + chave[0][2]*vetor2[2][0]) % 36,
+        (chave[1][0]*vetor2[0][0] + chave[1][1]*vetor2[1][0] + chave[1][2]*vetor2[2][0]) % 36,
+        (chave[2][0]*vetor2[0][0] + chave[2][1]*vetor2[1][0] + chave[2][2]*vetor2[2][0]) % 36
     ]
     
     codificado3 = [
-        (chave[0][0]*vetor3[0][0] + chave[0][1]*vetor3[1][0] + chave[0][2]*vetor3[2][0]) % 26,
-        (chave[1][0]*vetor3[0][0] + chave[1][1]*vetor3[1][0] + chave[1][2]*vetor3[2][0]) % 26,
-        (chave[2][0]*vetor3[0][0] + chave[2][1]*vetor3[1][0] + chave[2][2]*vetor3[2][0]) % 26
+        (chave[0][0]*vetor3[0][0] + chave[0][1]*vetor3[1][0] + chave[0][2]*vetor3[2][0]) % 36,
+        (chave[1][0]*vetor3[0][0] + chave[1][1]*vetor3[1][0] + chave[1][2]*vetor3[2][0]) % 36,
+        (chave[2][0]*vetor3[0][0] + chave[2][1]*vetor3[1][0] + chave[2][2]*vetor3[2][0]) % 36
     ]
     
     codificado4 = [
-        (chave[0][0]*vetor4[0][0] + chave[0][1]*vetor4[1][0] + chave[0][2]*vetor4[2][0]) % 26,
-        (chave[1][0]*vetor4[0][0] + chave[1][1]*vetor4[1][0] + chave[1][2]*vetor4[2][0]) % 26,
-        (chave[2][0]*vetor4[0][0] + chave[2][1]*vetor4[1][0] + chave[2][2]*vetor4[2][0]) % 26
+        (chave[0][0]*vetor4[0][0] + chave[0][1]*vetor4[1][0] + chave[0][2]*vetor4[2][0]) % 36,
+        (chave[1][0]*vetor4[0][0] + chave[1][1]*vetor4[1][0] + chave[1][2]*vetor4[2][0]) % 36,
+        (chave[2][0]*vetor4[0][0] + chave[2][1]*vetor4[1][0] + chave[2][2]*vetor4[2][0]) % 36
     ]
 
+    #adicionando vetores para matriz criptografada
     matrizCpfCriptografado.append(codificado1)
     matrizCpfCriptografado.append(codificado2)
     matrizCpfCriptografado.append(codificado3)
     matrizCpfCriptografado.append(codificado4)
 
-    # convertendos valores para letras, deixando igual ao exemplo: A5H2K9L1P8M
-    letra = True
-    contador = 0
-    while (contador < 4):
-        linha = matrizCpfCriptografado[contador]
-        contador2 = 0
+    #convertendo numeros para o alfabeto
+    linha = 0
+    valorCorrespondente = 0
+    #vai passando de linha em linha da matriz
+    while(linha<len(matrizCpfCriptografado)):
+        coluna = 0
+        #vai passando de coluna em coluna
+        while(coluna<len(matrizCpfCriptografado[linha])):
+            valorCorrespondente = matrizCpfCriptografado[linha][coluna] #pega o indice da matriz e transforma em seu correspondente do alfabeto
+            resultado+=alfabeto[valorCorrespondente]
+            coluna+=1
+        linha+=1
 
-        while (contador2 < 3):
-            caractere = linha[contador2]
-
-            if (letra == True):
-                # índices 0 e 2 → letra
-                resultado += chr(caractere + ord('A'))
-                letra = False
-            else:
-                # índice 1 → número
-                resultado += str(caractere)
-                letra = True
-
-            contador2 += 1
-
-        contador += 1
-
+    resultado = resultado #salva no banco com o digito a mais
     return resultado
 
 def decodificar_cpf(cpfCriptografado):
@@ -101,38 +98,24 @@ def decodificar_cpf(cpfCriptografado):
 
     #Logica -----------
 
+    alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
     matrizCpfDecodificado = []
     
-    chaveInversa = [[1,8,21], [21,12,8], [21,7,7]]
+    chaveInversa = [[12, 18, 5], [20, 21, 32], [31, 4, 1]]
 
-    # inversão de letras/números
+    #pegando valores correspondentes de acorsdo com o alfabeto
     contador = 0
     numerosCriptografados = []
-    tamanho = len(cpfCriptografado)
-    letra = True
-    while (contador < tamanho):
-
-        if(letra == True):
-            # para converter letra em numero
-            numerosCriptografados.append(ord(cpfCriptografado[contador]) - ord('A'))
-            letra = False
-            contador += 1
-        else:
-            # para numeros de 1 ou 2 digitos
-            numero = ""
-            while contador < tamanho and cpfCriptografado[contador].isdigit():
-                numero += cpfCriptografado[contador]
-                contador += 1
-            
-            #condição para n adicionar variavel "numero" sendo vazio
-            if numero != "":
-                numerosCriptografados.append(int(numero))
-                letra = True
-            else:
-                contador+=1
-            
-
+    valorCorrespondente = 0
+    caractere = ""
+    #vai passando de caractere em linha da string
+    while(contador<len(cpfCriptografado)):
+        
+        caractere = cpfCriptografado[contador]
+        valorCorrespondente = alfabeto.index(caractere) #pega a posição do caractere no alfabeto (seu valor correspondente)
+        numerosCriptografados.append(valorCorrespondente)
+        contador+=1
 
     # quebra o cpfCriptografado em 4 vetores 1x3
     vetor1 = [[numerosCriptografados[0]],[numerosCriptografados[1]],[numerosCriptografados[2]]]
@@ -141,27 +124,27 @@ def decodificar_cpf(cpfCriptografado):
     vetor4 = [[numerosCriptografados[9]],[numerosCriptografados[10]],[numerosCriptografados[11]]] # adicionando valor para contas de matriz
 
     decodificado1 = [
-        (chaveInversa[0][0]*vetor1[0][0] + chaveInversa[0][1]*vetor1[1][0] + chaveInversa[0][2]*vetor1[2][0]) % 26,
-        (chaveInversa[1][0]*vetor1[0][0] + chaveInversa[1][1]*vetor1[1][0] + chaveInversa[1][2]*vetor1[2][0]) % 26,
-        (chaveInversa[2][0]*vetor1[0][0] + chaveInversa[2][1]*vetor1[1][0] + chaveInversa[2][2]*vetor1[2][0]) % 26
+        (chaveInversa[0][0]*vetor1[0][0] + chaveInversa[0][1]*vetor1[1][0] + chaveInversa[0][2]*vetor1[2][0]) % 36,
+        (chaveInversa[1][0]*vetor1[0][0] + chaveInversa[1][1]*vetor1[1][0] + chaveInversa[1][2]*vetor1[2][0]) % 36,
+        (chaveInversa[2][0]*vetor1[0][0] + chaveInversa[2][1]*vetor1[1][0] + chaveInversa[2][2]*vetor1[2][0]) % 36
     ]
 
     decodificado2 = [
-        (chaveInversa[0][0]*vetor2[0][0] + chaveInversa[0][1]*vetor2[1][0] + chaveInversa[0][2]*vetor2[2][0]) % 26,
-        (chaveInversa[1][0]*vetor2[0][0] + chaveInversa[1][1]*vetor2[1][0] + chaveInversa[1][2]*vetor2[2][0]) % 26,
-        (chaveInversa[2][0]*vetor2[0][0] + chaveInversa[2][1]*vetor2[1][0] + chaveInversa[2][2]*vetor2[2][0]) % 26
+        (chaveInversa[0][0]*vetor2[0][0] + chaveInversa[0][1]*vetor2[1][0] + chaveInversa[0][2]*vetor2[2][0]) % 36,
+        (chaveInversa[1][0]*vetor2[0][0] + chaveInversa[1][1]*vetor2[1][0] + chaveInversa[1][2]*vetor2[2][0]) % 36,
+        (chaveInversa[2][0]*vetor2[0][0] + chaveInversa[2][1]*vetor2[1][0] + chaveInversa[2][2]*vetor2[2][0]) % 36
     ]
     
     decodificado3 = [
-        (chaveInversa[0][0]*vetor3[0][0] + chaveInversa[0][1]*vetor3[1][0] + chaveInversa[0][2]*vetor3[2][0]) % 26,
-        (chaveInversa[1][0]*vetor3[0][0] + chaveInversa[1][1]*vetor3[1][0] + chaveInversa[1][2]*vetor3[2][0]) % 26,
-        (chaveInversa[2][0]*vetor3[0][0] + chaveInversa[2][1]*vetor3[1][0] + chaveInversa[2][2]*vetor3[2][0]) % 26
+        (chaveInversa[0][0]*vetor3[0][0] + chaveInversa[0][1]*vetor3[1][0] + chaveInversa[0][2]*vetor3[2][0]) % 36,
+        (chaveInversa[1][0]*vetor3[0][0] + chaveInversa[1][1]*vetor3[1][0] + chaveInversa[1][2]*vetor3[2][0]) % 36,
+        (chaveInversa[2][0]*vetor3[0][0] + chaveInversa[2][1]*vetor3[1][0] + chaveInversa[2][2]*vetor3[2][0]) % 36
     ]
     
     decodificado4 = [
-        (chaveInversa[0][0]*vetor4[0][0] + chaveInversa[0][1]*vetor4[1][0] + chaveInversa[0][2]*vetor4[2][0]) % 26,
-        (chaveInversa[1][0]*vetor4[0][0] + chaveInversa[1][1]*vetor4[1][0] + chaveInversa[1][2]*vetor4[2][0]) % 26,
-        (chaveInversa[2][0]*vetor4[0][0] + chaveInversa[2][1]*vetor4[1][0] + chaveInversa[2][2]*vetor4[2][0]) % 26
+        (chaveInversa[0][0]*vetor4[0][0] + chaveInversa[0][1]*vetor4[1][0] + chaveInversa[0][2]*vetor4[2][0]) % 36,
+        (chaveInversa[1][0]*vetor4[0][0] + chaveInversa[1][1]*vetor4[1][0] + chaveInversa[1][2]*vetor4[2][0]) % 36,
+        (chaveInversa[2][0]*vetor4[0][0] + chaveInversa[2][1]*vetor4[1][0] + chaveInversa[2][2]*vetor4[2][0]) % 36
     ]
 
     matrizCpfDecodificado.append(decodificado1)
@@ -169,17 +152,19 @@ def decodificar_cpf(cpfCriptografado):
     matrizCpfDecodificado.append(decodificado3)
     matrizCpfDecodificado.append(decodificado4)
 
+    #transformando a matriz em string
     contador = 0
     resultado = ""
+    caractere = ""
     while (contador < 4):
         linha = matrizCpfDecodificado[contador]
         contador2 = 0
         while (contador2 < 3):
             caractere = linha[contador2]
-            resultado += str(caractere)
+            resultado += alfabeto[caractere]
             contador2 += 1
         contador += 1
 
     # remove o ultimo valor adicionado na codificação
-    resultado = resultado[:-1] #removendo valor adicional para calculos de matriz 
+    resultado = resultado[:-1] 
     return resultado
