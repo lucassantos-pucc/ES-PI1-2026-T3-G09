@@ -24,7 +24,7 @@ def codificar_cpf(cpfstring):
     resultado = ""
 
     #chave escolhida
-    chave = [[11,8,3],[7,6,2],[10,5,9]]
+    chave = [[11,8,3],[7,6,2],[10,5,8]]
     
     # quebra o cpf em 4 vetores 1x3
     vetor1 = [[cpf[0]],[cpf[1]],[cpf[2]]]
@@ -105,7 +105,7 @@ def decodificar_cpf(cpfCriptografado):
 
     matrizCpfDecodificado = []
     
-    chaveInversa = [[1,8,21], [21,12,8], [21,7,7]]
+    chaveInversa = [[4,1,8], [14,2,17], [9,17,12]]
 
     # inversão de letras/números
     contador = 0

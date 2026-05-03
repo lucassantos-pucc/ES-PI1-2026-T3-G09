@@ -1,11 +1,11 @@
 from conector.conexao_banco import conectar
-from db.db_eleitor import buscar_mesario_para_abertura
-from menus.menu_votar import votar
-from db.db_sessao_votacao import inserir_sessao_votacao
-from db.db_sessao_votacao import encerrar_sessao_votacao
-from db.db_sessao_votacao import buscar_sessao_aberta_por_mesario
-from db.db_sessao_votacao import buscar_sessao_aberta
-from db.db_sessao_votacao import listar_zeresima_por_sessao
+from db.eleitor_db import buscar_mesario_para_abertura
+from db.eleitor_db import resetar_status_votacao_eleitores
+from menus.votar_menu import votar
+from db.sessao_votacao_db import inserir_sessao_votacao
+from db.sessao_votacao_db import encerrar_sessao_votacao
+from db.sessao_votacao_db import buscar_sessao_aberta
+from db.sessao_votacao_db import listar_zeresima_por_sessao
 from datetime import datetime
 
 def menu_mesario():
@@ -17,12 +17,11 @@ def menu_mesario():
     opcao = ""
 
     while opcao != "0":
-
         print("\n===== MENU MESÁRIO =====")
         print("1 - ABRIR SISTEMA DE VOTAÇÃO")
         print("2 - AUDITORIA DA VOTAÇÃO")
         print("3 - RESULTADOS DA VOTAÇÃO")
-        print("4 - encerramento DA VOTAÇÃO")
+        print("4 - ENCERRAMENTO DA VOTAÇÃO")
         print("0 - VOLTAR")
 
         opcao = input("Escolha uma opção: ")
@@ -30,6 +29,7 @@ def menu_mesario():
         match opcao:
             case "1":
                 abrir_sistema_votacao()
+
 
             case "2":
                 auditoria_votacao()
@@ -40,23 +40,27 @@ def menu_mesario():
             case "4":
                 encerrar_sistema_votacao()
 
+
             case "0":
                 print("Voltando ao menu principal...")
+                return
+
 
             case _:
                 print("Opção inválida")
+
     conexao.close()
 
 def abrir_sistema_votacao():
     print("\n===== ABRIR SISTEMA DE VOTAÇÃO =====")
 
     titulo = input("Digite o título de eleitor: ")
-    cpf4 = input("Digite os 4 primeiros dígitos do CPF: ")
+    cpf = input("Digite os 4 primeiros dígitos do CPF: ")
     chave = input("Digite a chave de acesso: ")
 
     print("\nValidando mesário...")
 
-    valido = buscar_mesario_para_abertura(titulo, cpf4, chave)
+    valido = buscar_mesario_para_abertura(titulo, cpf, chave)
     if valido:
         print("Mesário validado com sucesso!")
         sessao_existente = buscar_sessao_aberta()
@@ -64,22 +68,26 @@ def abrir_sistema_votacao():
         if sessao_existente:
             print("Já existe uma sessão de votação aberta.")
             return True
+        
+        resetar_status_votacao_eleitores()
 
-        id_mesario = valido[0]
-        id_sessao=inserir_sessao_votacao(True, datetime.now(), id_mesario, None, None)
+        inserir_sessao_votacao(True, datetime.now(), None)
+
+        sessao_aberta = buscar_sessao_aberta()
+        id_sessao = sessao_aberta[0]
+
         resultado = listar_zeresima_por_sessao(id_sessao)
 
         print("\n===== ZERÉZIMA =====")
 
         for candidato in resultado:
-            print(f"ID: {candidato[0]} | Nome: {candidato[1]} | Número: {candidato[2]} | Partido: {candidato[3]} | Votos: {candidato[4]}")
-        
-
-        opcao = ""
+            print(f"Nome: {candidato[0]} | Número: {candidato[1]} | Partido: {candidato[2]} | Votos: {candidato[3]}")
+            opcao = " "
         while opcao != "2":
             print("\n===== URNA LIBERADA =====")
             print("1 - VOTAR")
             print("2 - ENCERRAR SISTEMA DE VOTAÇÃO")
+            print("0 - VOLTAR")
 
             opcao = input("Escolha uma opção: ")
 
@@ -88,8 +96,13 @@ def abrir_sistema_votacao():
                     votar()
                 case "2":
                     encerrar_sistema_votacao()
+                case "0":
+                    print("Voltando ao menu mesario...")
+                    return
+
                 case _:
                     print("Opção inválida")
+                    
         return True 
     else:
         print("Falha na validação do mesário")
@@ -108,9 +121,7 @@ def encerrar_sistema_votacao():
     mesario = buscar_mesario_para_abertura(titulo, cpf4, chave)
 
     if mesario:
-        id_mesario = mesario[0]
-
-        sessao = buscar_sessao_aberta_por_mesario(id_mesario)
+        sessao = buscar_sessao_aberta()
 
         if sessao:
             confirmar = input("Deseja realmente encerrar a votação? (S/N): ")
@@ -120,17 +131,16 @@ def encerrar_sistema_votacao():
 
                 if chave_confirmacao == chave:
                     id_sessao = sessao[0]
-                    encerrar_sessao_votacao(id_sessao, id_mesario)
+                    encerrar_sessao_votacao(id_sessao)
                     print("Votação encerrada com sucesso!")
                 else:
                     print("Chave de confirmação incorreta")
             else:
                 print("Encerramento cancelado")
         else:
-            print("Não existe sessão aberta para esse mesário.")
+            print("Não existe sessão aberta.")
     else:
         print("Falha na validação do mesário")
-
 
 
 

@@ -1,90 +1,65 @@
 from conector.conexao_banco import conectar
-from menus.menu_eleitor import menu_eleitor
-from menus.menu_mesario import menu_mesario
-from menus.menu_votar import votar
-from menus.menu_votar import ver_informacoes_voto
-from db.db_sessao_votacao import buscar_sessao_aberta
+from menus.eleitor_menu import menu_eleitor
+from menus.mesario_menu import menu_mesario
+from menus.votar_menu import votar
+from db.sessao_votacao_db import buscar_sessao_aberta
 
 
 
 
 
+conexao = conectar()
+
+if conexao.is_connected():
+    print("Conectado com sucesso!")
+
+conexao.close()
 
 
 
-def conectar_banco():
 
-    try:
-        conexao = conectar()
-        conexao.close()
-        return True
-    except Exception:
-        return False
+opcao = ""
+while opcao != "0":
+    sessao = buscar_sessao_aberta()
+
+    if sessao:
+        sessao_aberta = True
+
+    else: 
+        sessao_aberta= False
 
 
-def interface_de_usuario(sessao_aberta):
-
-    print("\n")
-    print("===== SISTEMA DE VOTAÇÃO =====")
+    print("\n===== SISTEMA DE VOTAÇÃO =====")
     print("1 - MESÁRIO")
     print("2 - ELEITOR")
+
     if sessao_aberta:
         print("3 - VOTAR")
-        print("4 - VER VOTO")
+        
+
+    
+
     print("0 - SAIR")
 
-def entrada_input(opcao):
+    opcao = input("Escolha uma opção: ")
+
     match opcao:
 
-        case "1":  # essa funcao esta dentro de src.menus.menu_mesario
+        case "1":
             menu_mesario()
 
-        case "2":  # essa funcao esta dentro de src.menus.menu_eleitor
+        case "2":
             menu_eleitor()
 
-        case "3":  # essa funcao esta dentro de src.menus.menu_votar
+        case "3":
             if sessao_aberta:
                 votar()
             else:
-                print("Opção inválida")
-
-        case "4":
-            if sessao_aberta:
-                ver_informacoes_voto()
-            else:
-                print("Opção inválida")
-
+                print("A votação ainda não foi aberta pelo mesário.")
+        
+      
         case "0":
             print("Encerrando sistema")
 
         case _:
             print("Opção inválida")
-
-
-
-
-
-
-
-
-
-
-
-# MAIN
-if conectar_banco():
-    print("Conexao bem sucedida")
-
-    # variavel usada para verificar quando eh possivel mostrar ao usuario opcoes adicionais de escolhas
-    sessao_aberta = bool(buscar_sessao_aberta())
-
-    opcao = None
-    while (opcao != "0"):
-
-        interface_de_usuario(sessao_aberta)
-
-        opcao = input("Escolha uma opção: ")
-
-        entrada_input(opcao)
-else:
-    print("Nao foi possivel conectar com o banco do MySql")
-

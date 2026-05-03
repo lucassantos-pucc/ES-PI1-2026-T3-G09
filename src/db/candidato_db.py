@@ -4,8 +4,8 @@ def buscar_candidato_por_numero(numero):
     conexao = conectar()
     cursor = conexao.cursor()
 
-    sql = "SELECT * FROM candidato WHERE numero = %s AND ativo = %s"
-    cursor.execute(sql, (numero, True))
+    sql = "SELECT * FROM candidato WHERE numero = %s"
+    cursor.execute(sql, (numero,))
 
     resultado = cursor.fetchone()
 

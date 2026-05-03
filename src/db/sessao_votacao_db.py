@@ -1,22 +1,19 @@
 from conector.conexao_banco import conectar
 from datetime import datetime
-
-def inserir_sessao_votacao(aberta, data_abertura, id_mesario_abertura, data_encerramento, id_mesario_encerramento):
+def inserir_sessao_votacao(aberta, data_abertura, data_encerramento):
     conexao = conectar()
     cursor = conexao.cursor()
 
     sql = """
     INSERT INTO sessao_votacao
-    (aberta, data_abertura, id_mesario_abertura, data_encerramento, id_mesario_encerramento)
-    VALUES (%s, %s, %s, %s, %s)
+    (aberta, data_abertura, data_encerramento)
+    VALUES (%s, %s, %s)
     """
 
     valores = (
         aberta,
         data_abertura,
-        id_mesario_abertura,
-        data_encerramento,
-        id_mesario_encerramento
+        data_encerramento
     )
 
     cursor.execute(sql, valores)
@@ -24,48 +21,6 @@ def inserir_sessao_votacao(aberta, data_abertura, id_mesario_abertura, data_ence
 
     cursor.close()
     conexao.close()
-
-def buscar_sessao_aberta_por_mesario(id_mesario):
-    conexao = conectar()
-    cursor = conexao.cursor()
-
-    sql = """
-    SELECT * FROM sessao_votacao
-    WHERE aberta = %s
-      AND id_mesario_abertura = %s
-    LIMIT 1
-    """
-
-    cursor.execute(sql, (True, id_mesario))
-    resultado = cursor.fetchone()
-
-    cursor.close()
-    conexao.close()
-
-    return resultado
-
-def encerrar_sessao_votacao(id_sessao, id_mesario_encerramento):
-    conexao = conectar()
-    cursor = conexao.cursor()
-
-    sql = """
-    UPDATE sessao_votacao
-    SET aberta = %s,
-        data_encerramento = %s,
-        id_mesario_encerramento = %s
-    WHERE id_sessao = %s
-    """
-
-    valores = (
-        False,
-        datetime.now(),
-        id_mesario_encerramento,
-        id_sessao
-    )
-    cursor.execute(sql, valores)
-    conexao.commit()
-
-
 
 
 def buscar_sessao_aberta():
@@ -87,7 +42,31 @@ def buscar_sessao_aberta():
     return resultado
 
 
-from conector.conexao_banco import conectar
+def encerrar_sessao_votacao(id_sessao):
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    sql = """
+    UPDATE sessao_votacao
+    SET aberta = %s,
+        data_encerramento = %s
+    WHERE id_sessao = %s
+    """
+
+    valores = (
+        False,
+        datetime.now(),
+        id_sessao
+    )
+
+    cursor.execute(sql, valores)
+    conexao.commit()
+
+    cursor.close()
+    conexao.close()
+
+
+
 
 def listar_zeresima_por_sessao(id_sessao):
     conexao = conectar()
@@ -95,21 +74,19 @@ def listar_zeresima_por_sessao(id_sessao):
 
     sql = """
     SELECT 
-        c.id_candidato,
         c.nome,
         c.numero,
         c.partido,
         COUNT(v.id_voto) AS total_votos
     FROM candidato c
     LEFT JOIN voto v
-        ON c.id_candidato = v.id_candidato
+        ON c.numero = v.numero_candidato
         AND v.id_sessao = %s
-    WHERE c.ativo = %s
-    GROUP BY c.id_candidato, c.nome, c.numero, c.partido
+    GROUP BY c.nome, c.numero, c.partido
     ORDER BY c.nome
     """
 
-    cursor.execute(sql, (id_sessao, True))
+    cursor.execute(sql, (id_sessao,))
     resultado = cursor.fetchall()
 
     cursor.close()

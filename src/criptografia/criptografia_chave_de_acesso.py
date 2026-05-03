@@ -33,7 +33,8 @@ def codificar_chave_de_acesso(chaveDeAcessoString):
     resultado = ""
 
     #chave escolhida para criptografar
-    chave = [[1, 2, 3], [0, 1, 4], [5, 6, 0]]
+
+    chave = [[11,8,3],[7,6,2],[10,5,8]]
 
     #3x3 pra multiplicar tem q ter 3 colunas
 
@@ -96,7 +97,7 @@ def decodificar_chave_de_acesso(chaveAcessoCriptografada):
 
     matrizChaveAcessoDecodificada = []
 
-    chaveInversa = [[12, 18, 5], [20, 21, 32], [31, 4, 1]]
+    chaveInversa = [[4,1,8], [14,2,17], [9,17,12]]
 
     caractere = 0
     # pega os valores correspondentes ao alfabeto
@@ -111,8 +112,7 @@ def decodificar_chave_de_acesso(chaveAcessoCriptografada):
     # divide a matriz em 3 vetores
     vetor1 = [[numerosCriptografados[0]], [numerosCriptografados[1]], [numerosCriptografados[2]]]
     vetor2 = [[numerosCriptografados[3]], [numerosCriptografados[4]], [numerosCriptografados[5]]]
-    vetor3 = [[numerosCriptografados[6]], [numerosCriptografados[7]], [numerosCriptografados[8]]]
-
+    vetor3 = [[numerosCriptografados[6]], [numerosCriptografados[7]], [numerosCriptografados[8]]] # adicionando valores para tampar buraco e fazer contas de matriz
 
     decodificado1 = [
         (chaveInversa[0][0]*vetor1[0][0] + chaveInversa[0][1]*vetor1[1][0] + chaveInversa[0][2]*vetor1[2][0]) % 36,
