@@ -4,6 +4,9 @@ from menus.mesario_menu import menu_mesario
 from menus.votar_menu import votar
 from db.sessao_votacao_db import buscar_sessao_aberta
 
+from menus.gerenciamento_menu import menu_gerenciamento
+from menus.votacao_menu import menu_votacao
+
 
 
 
@@ -11,9 +14,13 @@ from db.sessao_votacao_db import buscar_sessao_aberta
 conexao = conectar()
 
 if conexao.is_connected():
-    print("Conectado com sucesso!")
+    print(f"\nConectado com sucesso!")
 
 conexao.close()
+
+
+
+
 
 
 
@@ -22,12 +29,7 @@ opcao = ""
 while opcao != "0":
     sessao = buscar_sessao_aberta()
 
-    if sessao:
-        sessao_aberta = True
-
-    else: 
-        sessao_aberta= False
-
+    sessao_aberta = True if sessao else False # True quando sessao existe, else caso contrario
 
     print("\n===== SISTEMA DE VOTAÇÃO =====")
     print("1 - MESÁRIO")
@@ -35,21 +37,21 @@ while opcao != "0":
 
     if sessao_aberta:
         print("3 - VOTAR")
-        
-
-    
 
     print("0 - SAIR")
 
-    opcao = input("Escolha uma opção: ")
 
+
+    opcao = input("Escolha uma opção: ")
     match opcao:
 
         case "1":
-            menu_mesario()
+            # old menu_mesario()
+            menu_gerenciamento()
 
         case "2":
-            menu_eleitor()
+            # old menu_eleitor()
+            menu_votacao()
 
         case "3":
             if sessao_aberta:

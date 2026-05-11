@@ -15,7 +15,6 @@ def menu_mesario():
         print("Conectado com sucesso no menu mesário")
 
     opcao = ""
-
     while opcao != "0":
         print("\n===== MENU MESÁRIO =====")
         print("1 - ABRIR SISTEMA DE VOTAÇÃO")

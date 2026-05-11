@@ -3,7 +3,6 @@ from db.eleitor_db import buscar_eleitor_por_cpf, buscar_eleitor_ja_votou, marca
 from db.sessao_votacao_db import buscar_sessao_aberta
 from db.candidato_db import buscar_candidato_por_numero
 from db.votar_db import inserir_voto
-from datetime import datetime
 
 
 def votar():

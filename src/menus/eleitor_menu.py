@@ -13,7 +13,6 @@ def menu_eleitor():
         print("Conectado com sucesso no menu eleitor")
 
     opcao = ""
-
     while opcao != "0":
         print("\n===== MENU ELEITOR =====")
         print("1 - CADASTRAR")
