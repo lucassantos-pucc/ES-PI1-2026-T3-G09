@@ -1,22 +1,20 @@
 from conector.conexao_banco import conectar
 
-def menu_votacao():
+def menu_gerenciamento():
 
     conexao = conectar()
 
     if conexao.is_connected():
-        print("Conectado com sucesso no menu eleitor")
+        print(f"\nConectado com sucesso no menu gerenciamento")
 
 
 
     opcao = ""
     while (opcao != "0"):
-        print("\n===== MENU ELEITOR =====")
-        print("1 - xxx")
-        print("2 - xxx")
-        print("3 - xxx")
-        print("4 - xxx")
-        print("0 - xxx")
+        print("\n===== MENU GERENCIAMENTO =====")
+        print("1 - GERENCIAR ELEITORES")
+        print("2 - GERENCIAR CANDIDATOS")
+        print("0 - VOLTAR")
 
         opcao = input("Escolha uma opção: ")
 
@@ -24,10 +22,6 @@ def menu_votacao():
             case "1":
                 pass
             case "2":
-                pass
-            case "3":
-                pass
-            case "4":
                 pass
             case "0":
                 print("Voltando...")
