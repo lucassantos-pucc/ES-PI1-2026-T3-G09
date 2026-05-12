@@ -1,7 +1,68 @@
-from menus.submodulos_votacao.submodulo_resultado_votacao.boletim_urna import boletim_urna
-from menus.submodulos_votacao.submodulo_resultado_votacao.estatistica_comparecimento import estatistica_comparecimento
-from menus.submodulos_votacao.submodulo_resultado_votacao.votos_por_partido import votos_por_partido
-from menus.submodulos_votacao.submodulo_resultado_votacao.validacao_integridade import validacao_integridade
+
+
+def boletim_urna():
+
+    opcao = ""
+    while (opcao != "0"):
+        print("\n===== MENU BOLETIM URNA =====")
+        print("0 - VOLTAR")
+
+        opcao = input("Escolha uma opção: ")
+        print("\033c", end="")
+        match opcao:
+            case "0":
+                pass
+            
+            case _:
+                print("Opção inválida")
+
+def estatistica_comparecimento():
+
+    opcao = ""
+    while (opcao != "0"):
+        print("\n===== MENU ESTATISTICA DE COMPARECIMENTO =====")
+        print("0 - VOLTAR")
+
+        opcao = input("Escolha uma opção: ")
+        print("\033c", end="")
+        match opcao:
+            case "0":
+                pass
+            
+            case _:
+                print("Opção inválida")
+
+def validacao_integridade():
+
+    opcao = ""
+    while (opcao != "0"):
+        print("\n===== MENU VALIDACAO DE INTEGRIDADE =====")
+        print("0 - VOLTAR")
+
+        opcao = input("Escolha uma opção: ")
+        print("\033c", end="")
+        match opcao:
+            case "0":
+                pass
+            
+            case _:
+                print("Opção inválida")
+
+def votos_por_partido():
+
+    opcao = ""
+    while (opcao != "0"):
+        print("\n===== MENU VOTOR POR PARTIDO =====")
+        print("0 - VOLTAR")
+
+        opcao = input("Escolha uma opção: ")
+        print("\033c", end="")
+        match opcao:
+            case "0":
+                pass
+            
+            case _:
+                print("Opção inválida")
 
 def resultado_votacao():
 

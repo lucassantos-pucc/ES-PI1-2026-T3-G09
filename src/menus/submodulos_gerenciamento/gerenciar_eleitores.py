@@ -4,6 +4,85 @@ from menus.submodulos_gerenciamento.submodulo_gerenciar_eleitores.remover_eleito
 from menus.submodulos_gerenciamento.submodulo_gerenciar_eleitores.buscar_cpf_titulo import buscar_cpf_titulo
 from menus.submodulos_gerenciamento.submodulo_gerenciar_eleitores.listar_eleitores import listar_eleitores
 
+def buscar_cpf_titulo():
+
+    opcao = ""
+    while (opcao != "0"):
+        print("\n===== MENU BUSCAR CPF =====")
+        print("0 - VOLTAR")
+
+        opcao = input("Escolha uma opção: ")
+        print("\033c", end="")
+        match opcao:
+            case "0":
+                pass
+            
+            case _:
+                print("Opção inválida")
+
+def cadastrar():
+
+    opcao = ""
+    while (opcao != "0"):
+        print("\n===== MENU CADASTRAR =====")
+        print("0 - VOLTAR")
+
+        opcao = input("Escolha uma opção: ")
+        print("\033c", end="")
+        match opcao:
+            case "0":
+                pass
+            
+            case _:
+                print("Opção inválida")
+
+def editar_eleitor():
+
+    opcao = ""
+    while (opcao != "0"):
+        print("\n===== MENU EDITAR ELEITOR =====")
+        print("0 - VOLTAR")
+
+        opcao = input("Escolha uma opção: ")
+        print("\033c", end="")
+        match opcao:
+            case "0":
+                pass
+            
+            case _:
+                print("Opção inválida")
+
+def listar_eleitores():
+
+    opcao = ""
+    while (opcao != "0"):
+        print("\n===== MENU LISTAR ELEITORES =====")
+        print("0 - VOLTAR")
+
+        opcao = input("Escolha uma opção: ")
+        print("\033c", end="")
+        match opcao:
+            case "0":
+                pass
+            
+            case _:
+                print("Opção inválida")
+
+def remover_eleitor():
+
+    opcao = ""
+    while (opcao != "0"):
+        print("\n===== MENU REMOVER ELEITOR =====")
+        print("0 - VOLTAR")
+
+        opcao = input("Escolha uma opção: ")
+        print("\033c", end="")
+        match opcao:
+            case "0":
+                pass
+            
+            case _:
+                print("Opção inválida")
 
 def gerenciar_eleitores():
 

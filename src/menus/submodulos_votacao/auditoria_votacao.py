@@ -1,6 +1,37 @@
-from menus.submodulos_votacao.submodulos_auditoria_votacao.exibir_logs_ocorrencia import exibir_logs_ocorrencia
-from menus.submodulos_votacao.submodulos_auditoria_votacao.exibir_protocolos import exibir_protocolos
 
+def exibir_logs_ocorrencia():
+
+    opcao = ""
+    while (opcao != "0"):
+        print("\n===== MENU EXIBIR LOGS E OCORRENCIAS =====")
+        print("0 - VOLTAR")
+
+        opcao = input("Escolha uma opção: ")
+        print("\033c", end="")
+        match opcao:
+            case "0":
+                pass
+            
+            case _:
+                print("Opção inválida")
+
+def exibir_protocolos():
+
+    opcao = ""
+    while (opcao != "0"):
+        print("\n===== MENU EXIBIR PROTOCOLOS =====")
+        print("0 - VOLTAR")
+
+        opcao = input("Escolha uma opção: ")
+        print("\033c", end="")
+        match opcao:
+            case "0":
+                pass
+            
+            case _:
+                print("Opção inválida")
+
+                
 def auditoria_votacao():
 
     opcao = ""
@@ -24,3 +55,4 @@ def auditoria_votacao():
             
             case _:
                 print("Opção inválida")
+
