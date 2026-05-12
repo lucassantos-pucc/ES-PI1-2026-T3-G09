@@ -1,11 +1,6 @@
 from conector.conexao_banco import conectar
-# from menus.eleitor_menu import menu_eleitor # velho
-# from menus.mesario_menu import menu_mesario # velho
-from antigo_menu.votar_menu import votar
-from db.sessao_votacao_db import buscar_sessao_aberta
-
-from novo_menu.gerenciamento_menu import menu_gerenciamento # novo
-from novo_menu.votacao_menu import menu_votacao # novo
+from menu_principal.gerenciamento import gerenciamento # novo
+from menu_principal.votacao import votacao # novo
 
 
 
@@ -29,8 +24,8 @@ opcao = ""
 while opcao != "0":
 
     print("\n===== SISTEMA DE VOTAÇÃO =====")
-    print("1 - MESÁRIO")
-    print("2 - ELEITOR")
+    print("1 - GERENCIAMENTO")
+    print("2 - VOTACAO")
     print("0 - SAIR")
 
 
@@ -40,11 +35,11 @@ while opcao != "0":
 
         case "1":
             #menu_mesario() # velho
-            menu_gerenciamento() # novo
+            gerenciamento() # novo
 
         case "2":
             #menu_eleitor() # velho
-            menu_votacao() # novo
+            votacao() # novo
       
         case "0":
             print("Encerrando sistema")

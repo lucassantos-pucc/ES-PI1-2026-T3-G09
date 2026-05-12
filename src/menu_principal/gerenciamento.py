@@ -1,13 +1,9 @@
-from conector.conexao_banco import conectar
-
-def menu_gerenciamento():
-
-    conexao = conectar()
-
-    if conexao.is_connected():
-        print(f"\nConectado com sucesso no menu gerenciamento")
+from menu_principal.submodulos_gerenciamento.gerenciar_eleitores import gerenciar_eleitores # case 1
+from menu_principal.submodulos_gerenciamento.gerenciar_candidatos import gerenciar_candidatos # case 2
 
 
+
+def gerenciamento():
 
     opcao = ""
     while (opcao != "0"):
@@ -20,10 +16,13 @@ def menu_gerenciamento():
 
         match opcao:
             case "1":
-                pass
+                gerenciar_eleitores()
+                
             case "2":
-                pass
+                gerenciar_candidatos()
+
             case "0":
-                print("Voltando...")
+                pass
+            
             case _:
                 print("Opção inválida")
