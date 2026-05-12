@@ -1,4 +1,5 @@
-
+from menu_principal.submodulos_votacao.submodulos_abrir_sistema_votacao.votar import votar
+from menu_principal.submodulos_votacao.submodulos_abrir_sistema_votacao.encerrar_votacao import encerrar_votacao
 
 def abrir_sistema_votacao():
 
@@ -13,10 +14,13 @@ def abrir_sistema_votacao():
 
         match opcao:
             case "1":
-                pass
+                votar()
+
             case "2":
-                pass
+                encerrar_votacao()
+
             case "0":
                 pass
+            
             case _:
                 print("Opção inválida")

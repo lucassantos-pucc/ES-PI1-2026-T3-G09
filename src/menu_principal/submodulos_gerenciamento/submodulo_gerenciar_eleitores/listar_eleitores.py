@@ -2,19 +2,14 @@ def listar_eleitores():
 
     opcao = ""
     while (opcao != "0"):
-        print("\n===== placeholder =====")
-        print("1 - placeholder")
-        print("2 - placeholder")
-        print("0 - placeholder")
+        print("\n===== MENU LISTAR ELEITORES =====")
+        print("0 - VOLTAR")
 
         opcao = input("Escolha uma opção: ")
 
         match opcao:
-            case "1":
-                pass
-            case "2":
-                pass
             case "0":
                 pass
+            
             case _:
                 print("Opção inválida")

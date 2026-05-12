@@ -1,4 +1,5 @@
-
+from menu_principal.submodulos_votacao.submodulos_auditoria_votacao.exibir_logs_ocorrencia import exibir_logs_ocorrencia
+from menu_principal.submodulos_votacao.submodulos_auditoria_votacao.exibir_protocolos import exibir_protocolos
 
 def auditoria_votacao():
 
@@ -13,10 +14,13 @@ def auditoria_votacao():
 
         match opcao:
             case "1":
-                pass
+                exibir_logs_ocorrencia()
+
             case "2":
-                pass
+                exibir_protocolos()
+
             case "0":
                 pass
+            
             case _:
                 print("Opção inválida")

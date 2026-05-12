@@ -1,11 +1,15 @@
-
+from menu_principal.submodulos_gerenciamento.submodulo_gerenciar_eleitores.cadastrar import cadastrar
+from menu_principal.submodulos_gerenciamento.submodulo_gerenciar_eleitores.editar_eleitor import editar_eleitor
+from menu_principal.submodulos_gerenciamento.submodulo_gerenciar_eleitores.remover_eleitor import remover_eleitor
+from menu_principal.submodulos_gerenciamento.submodulo_gerenciar_eleitores.buscar_cpf_titulo import buscar_cpf_titulo
+from menu_principal.submodulos_gerenciamento.submodulo_gerenciar_eleitores.listar_eleitores import listar_eleitores
 
 
 def gerenciar_eleitores():
 
     opcao = ""
     while (opcao != "0"):
-        print("\n===== MENU DE GERENCIAR ELEITORES =====")
+        print("\n===== GERENCIAR ELEITORES =====")
         print("1 - CADASTRAR")
         print("2 - EDITAR ELEITOR")
         print("3 - REMOVER ELEITOR")
@@ -17,10 +21,22 @@ def gerenciar_eleitores():
 
         match opcao:
             case "1":
-                pass
+                cadastrar()
+
             case "2":
-                pass
+                editar_eleitor()
+
+            case "3":
+                remover_eleitor()
+
+            case "4":
+                buscar_cpf_titulo()
+
+            case "5":
+                listar_eleitores()
+
             case "0":
                 pass
+
             case _:
                 print("Opção inválida")
