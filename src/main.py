@@ -1,7 +1,7 @@
 from conector.conexao_banco import conectar
-from menu_principal.gerenciamento import gerenciamento # novo
-from menu_principal.votacao import votacao # novo
-
+from menus.gerenciamento import gerenciamento # novo
+from menus.votacao import votacao # novo
+print("\033c", end="")
 
 
 
@@ -12,7 +12,6 @@ if conexao.is_connected():
     print(f"\nConectado com sucesso!")
 
 conexao.close()
-
 
 
 
@@ -31,6 +30,7 @@ while opcao != "0":
 
 
     opcao = input("Escolha uma opção: ")
+    print("\033c", end="")
     match opcao:
 
         case "1":

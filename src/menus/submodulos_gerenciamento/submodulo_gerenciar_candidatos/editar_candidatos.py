@@ -1,0 +1,15 @@
+def editar_candidatos():
+
+    opcao = ""
+    while (opcao != "0"):
+        print("\n===== MENU EDITAR CANDIDATOS =====")
+        print("0 - VOLTAR")
+
+        opcao = input("Escolha uma opção: ")
+        print("\033c", end="")
+        match opcao:
+            case "0":
+                pass
+            
+            case _:
+                print("Opção inválida")
