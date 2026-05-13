@@ -1,63 +1,34 @@
 from conector.conexao_banco import conectar
-from menus.eleitor_menu import menu_eleitor
-from menus.mesario_menu import menu_mesario
-from menus.votar_menu import votar
-from db.sessao_votacao_db import buscar_sessao_aberta
+from menus.menu_gerenciamento import menu_gerenciamento
+from menus.menu_votacao import menu_votacao
 
-
-
-
+print("\033c", end="")
 
 conexao = conectar()
 
 if conexao.is_connected():
-    print("Conectado com sucesso!")
+    print("\nConectado com sucesso!")
 
 conexao.close()
 
-
-
-
 opcao = ""
+
 while opcao != "0":
-    sessao = buscar_sessao_aberta()
-
-    if sessao:
-        sessao_aberta = True
-
-    else: 
-        sessao_aberta= False
-
-
     print("\n===== SISTEMA DE VOTAÇÃO =====")
-    print("1 - MESÁRIO")
-    print("2 - ELEITOR")
-
-    if sessao_aberta:
-        print("3 - VOTAR")
-        
-
-    
-
+    print("1 - GERENCIAMENTO")
+    print("2 - VOTACAO")
     print("0 - SAIR")
 
     opcao = input("Escolha uma opção: ")
+    print("\033c", end="")
 
     match opcao:
-
         case "1":
-            menu_mesario()
+            menu_gerenciamento()
 
         case "2":
-            menu_eleitor()
-
-        case "3":
-            if sessao_aberta:
-                votar()
-            else:
-                print("A votação ainda não foi aberta pelo mesário.")
+            menu_votacao()
         
-      
         case "0":
             print("Encerrando sistema")
 
