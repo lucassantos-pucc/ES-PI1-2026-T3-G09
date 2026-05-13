@@ -67,7 +67,12 @@ def menu_auditoria_votacao():
                 log()
 
             case"2":
-                protocolo()
+                # atribui a protocolos o retorno da função protocolo (tupla com todos os protocolos do banco)
+                protocolos = protocolo()
+                
+                # printa no terminal os protocolos 
+                for item in protocolos:
+                    print(item[0])
 
             case "0":
                 pass
