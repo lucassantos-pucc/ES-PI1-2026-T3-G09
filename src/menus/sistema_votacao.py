@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from conector.conexao_banco import conectar
 from db.candidatodb import buscar_candidato_por_numero
 from db.eleitordb import (
     buscar_eleitor_ja_votou,
@@ -79,7 +80,7 @@ def votar():
 
                 if candidato:
                     agora = datetime.now()
-                    protocolo = "P" + agora.strftime("%Y%m%d%H%M%S")
+                    protocolo = criar_protocolo_votacao(numero_digitado)
 
                     inserir_voto(
                         numero_digitado,
@@ -135,7 +136,27 @@ def log():
     pass
 
 def protocolo():
-    pass
+
+    """
+    faz a conexão com o banco e retorna todos os protocolos de votação em ordem alfabetica
+
+    
+    Returns:
+        resultado (tuple): retorna todos os protocolos do banco de dados em formato de tupla
+
+    """
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    sql = "SELECT protocolo FROM voto order by protocolo"
+    cursor.execute(sql)
+
+    resultado = cursor.fetchall()
+
+    cursor.close()
+    conexao.close()
+
+    return resultado
 
 
 def resultados_votacao():
