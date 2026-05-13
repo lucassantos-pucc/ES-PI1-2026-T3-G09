@@ -96,7 +96,7 @@ def decodificar_cpf(cpfCriptografado):
         cpfCriptografado (str): CPF do usuario criptografado.
     
     Returns:
-        str: CPF do usuario em formato string
+        resultado (str): CPF do usuario em formato string
 
     """
 
