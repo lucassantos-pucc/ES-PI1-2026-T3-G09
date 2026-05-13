@@ -18,6 +18,11 @@ from db.votarbd import inserir_voto
 
 
 def abrir_sistema_votacao():
+    """Abre o sistema de votação após validar o mesário.
+
+    Valida as credenciais do mesário, verifica se já existe uma sessão aberta,
+    reseta o status de votação dos eleitores, cria uma nova sessão e exibe a zerésima.
+    """
     print("\n===== ABRIR SISTEMA DE VOTAÇÃO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -56,6 +61,11 @@ def abrir_sistema_votacao():
 
 
 def votar():
+    """Registra o voto de um eleitor autenticado na sessão de votação aberta.
+
+    Valida as credenciais do eleitor, verifica se a sessão está aberta,
+    confirma que o eleitor ainda não votou e registra o voto com protocolo.
+    """
     print("\n===== VOTAR =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -100,6 +110,11 @@ def votar():
 
 
 def encerrar_sistema_votacao():
+    """Encerra a sessão de votação após validar o mesário e confirmar o encerramento.
+
+    Valida as credenciais do mesário, verifica se existe sessão aberta,
+    solicita confirmação e chave de acesso antes de encerrar.
+    """
     print("\n===== ENCERRAR SISTEMA DE VOTAÇÃO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -132,12 +147,14 @@ def encerrar_sistema_votacao():
 
 
 def log():
+    """Exibe os logs de ocorrência do sistema de votação."""
     pass
 
 def protocolo():
+    """Exibe os protocolos de votação registrados na sessão."""
     pass
 
 
 def resultados_votacao():
+    """Exibe os resultados da votação da sessão encerrada."""
     print("Exibindo resultados da votação...")
-

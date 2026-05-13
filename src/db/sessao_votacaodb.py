@@ -1,6 +1,12 @@
 from conector.conexao_banco import conectar
 from datetime import datetime
+
 def inserir_sessao_votacao(aberta, data_abertura, data_encerramento):
+    """Insere uma nova sessão de votação no banco de dados.
+
+    Registra a sessão com o status de abertura, a data de abertura
+    e a data de encerramento, que pode ser nula para sessões em andamento.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -24,6 +30,11 @@ def inserir_sessao_votacao(aberta, data_abertura, data_encerramento):
 
 
 def buscar_sessao_aberta():
+    """Busca e retorna a sessão de votação atualmente aberta.
+
+    Consulta a primeira sessão com status aberto no banco de dados.
+    Retorna o registro encontrado ou None caso não exista sessão aberta.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -43,6 +54,11 @@ def buscar_sessao_aberta():
 
 
 def encerrar_sessao_votacao(id_sessao):
+    """Encerra uma sessão de votação no banco de dados.
+
+    Atualiza o status da sessão para fechada e registra a data e hora
+    de encerramento com o momento atual.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -64,8 +80,6 @@ def encerrar_sessao_votacao(id_sessao):
 
     cursor.close()
     conexao.close()
-
-
 
 
 def listar_zeresima_por_sessao(id_sessao):

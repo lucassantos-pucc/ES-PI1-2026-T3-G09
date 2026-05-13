@@ -8,10 +8,12 @@ from criptografia.criptografia_cpf import codificar_cpf, decodificar_cpf
 from criptografia.criptografia_chave_de_acesso import codificar_chave_de_acesso, decodificar_chave_de_acesso
 
 
-
-
-
 def cadastrar_eleitor():
+    """Realiza o cadastro de um novo eleitor no sistema.
+
+    Valida o CPF e o título de eleitor, verifica se o eleitor já existe,
+    gera uma chave de acesso e armazena os dados criptografados no banco.
+    """
     print("\n===== CADASTRAR ELEITOR =====")
 
     nome_completo = input("Digite o nome completo: ")
@@ -61,9 +63,12 @@ def cadastrar_eleitor():
     print("Cadastro realizado com sucesso!")
 
 
-
-
 def editar_eleitor():
+    """Edita o cadastro de um eleitor existente no sistema.
+
+    Autentica o eleitor, exibe os dados atuais, solicita os novos dados,
+    valida CPF e título e atualiza o registro com uma nova chave de acesso gerada.
+    """
     print("\n===== EDITAR CADASTRO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -116,6 +121,11 @@ def editar_eleitor():
 
 
 def excluir_eleitor():
+    """Exclui o cadastro de um eleitor do sistema.
+
+    Autentica o eleitor, exibe seus dados e solicita confirmação
+    antes de remover permanentemente o registro do banco de dados.
+    """
     print("\n===== EXCLUIR CADASTRO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -146,6 +156,11 @@ def excluir_eleitor():
 
 
 def buscar_eleitor():
+    """Busca e exibe os dados de um eleitor autenticado no sistema.
+
+    Autentica o eleitor pelas credenciais informadas e exibe seus dados
+    descriptografados, incluindo nome, CPF, título e status de mesário e votação.
+    """
     print("\n===== BUSCAR CADASTRO =====")
 
     titulo = input("Digite o título de eleitor: ")

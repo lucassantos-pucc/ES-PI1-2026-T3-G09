@@ -3,6 +3,11 @@ from criptografia.criptografia_cpf import codificar_cpf, decodificar_cpf
 from criptografia.criptografia_chave_de_acesso import codificar_chave_de_acesso, decodificar_chave_de_acesso
 
 def inserir_eleitor(nome_completo, cpf, titulo_eleitor, chave_acesso, eh_mesario, ja_votou):
+    """Insere um novo eleitor no banco de dados.
+
+    Registra o eleitor com nome, CPF criptografado, título, chave de acesso
+    criptografada e os status de mesário e votação.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -28,6 +33,11 @@ def inserir_eleitor(nome_completo, cpf, titulo_eleitor, chave_acesso, eh_mesario
     conexao.close()
 
 def buscar_eleitor_por_cpf(titulo, cpf4, chave):
+    """Busca e retorna um eleitor autenticado pelo título, CPF parcial e chave de acesso.
+
+    Consulta o eleitor pelo título, descriptografa o CPF e a chave e valida
+    as credenciais informadas. Retorna o registro ou None se inválido.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -58,6 +68,11 @@ def buscar_eleitor_por_cpf(titulo, cpf4, chave):
 
 
 def verificar_eleitor_existente(cpf, titulo):
+    """Verifica se já existe um eleitor cadastrado com o CPF ou título informado.
+
+    Criptografa o CPF antes da consulta e retorna o registro encontrado
+    ou None caso não exista.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
     cpf_criptografado = codificar_cpf(cpf)
@@ -75,6 +90,11 @@ def verificar_eleitor_existente(cpf, titulo):
     return resultado
 
 def buscar_eleitor_ja_votou(titulo, cpf4, chave):
+    """Verifica se um eleitor já realizou seu voto na sessão atual.
+
+    Busca o eleitor pelo título com status de votação verdadeiro e valida
+    o CPF parcial e a chave de acesso. Retorna o registro ou None.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -107,6 +127,11 @@ def buscar_eleitor_ja_votou(titulo, cpf4, chave):
     return None
 
 def marcar_eleitor_como_votou(titulo, cpf4, chave):
+    """Marca um eleitor como tendo votado na sessão atual.
+
+    Autentica o eleitor e atualiza o campo ja_votou para verdadeiro
+    no banco de dados. Retorna False se o eleitor não for encontrado.
+    """
     eleitor = buscar_eleitor_por_cpf(titulo, cpf4, chave)
 
     if not eleitor:
@@ -130,6 +155,11 @@ def marcar_eleitor_como_votou(titulo, cpf4, chave):
     return True
 
 def atualizar_eleitor(nome_completo, cpf, titulo_eleitor, chave_acesso, eh_mesario, ja_votou, cpf_antigo):
+    """Atualiza os dados cadastrais de um eleitor no banco de dados.
+
+    Criptografa o novo CPF e a nova chave de acesso antes de atualizar
+    o registro identificado pelo CPF antigo criptografado.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -167,6 +197,11 @@ def atualizar_eleitor(nome_completo, cpf, titulo_eleitor, chave_acesso, eh_mesar
    
 
 def deletar_eleitor(cpf):
+    """Remove o registro de um eleitor do banco de dados pelo CPF.
+
+    Executa a exclusão permanente do eleitor identificado pelo CPF
+    criptografado e exibe uma mensagem de confirmação.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -182,6 +217,11 @@ def deletar_eleitor(cpf):
 
 
 def buscar_mesario_para_abertura(titulo_eleitor, cpf4, chave_acesso):
+    """Busca e valida um mesário para abertura do sistema de votação.
+
+    Consulta o eleitor com perfil de mesário pelo título, valida o CPF
+    parcial e a chave de acesso.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -213,6 +253,11 @@ def buscar_mesario_para_abertura(titulo_eleitor, cpf4, chave_acesso):
 
 
 def resetar_status_votacao_eleitores():
+    """Redefine o status de votação de todos os eleitores para não votado.
+
+    Atualiza o campo ja_votou para falso em todos os registros da tabela
+    de eleitores, utilizado ao abrir uma nova sessão de votação.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
