@@ -1,5 +1,9 @@
 def validar_titulo(titulo):
+    """Validacao do título de eleitor.
 
+    Verifica o formato, o código de estado e os dois dígitos verificadores
+    seguindo as regras do Tribunal Superior Eleitoral.
+    """
     if len(titulo) != 12 or not titulo.isdigit(): # verifica se tem 12 caracteres e se são todos numeros
         return False
 
@@ -35,4 +39,4 @@ def validar_titulo(titulo):
     else:
         d2 = resto
 
-    return d2 == int(titulo[11]) #mesma coisa,verifica se o valor de d2 é igual ao da posicao 11 
+    return d2 == int(titulo[11]) #mesma coisa,verifica se o valor de d2 é igual ao da posicao 11
