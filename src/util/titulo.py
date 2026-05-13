@@ -2,8 +2,8 @@ def validar_titulo(titulo):
 
     if len(titulo) != 12 or not titulo.isdigit(): # verifica se tem 12 caracteres e se são todos numeros
         return False
-    #os numeros referentes as posicoes,sao da contagem humana
-    # verifica o estado (posicoes 9 e 10)
+
+    # verifica o estado (posicoes 8 e 9)
     estado = int(titulo[8:10]) 
     if estado < 1 or estado > 28:
         return False
@@ -19,13 +19,13 @@ def validar_titulo(titulo):
     elif resto == 0:
         d1 = 1 if estado in (1, 2) else 0 ## SP e MG usam 1 e o restante usa 0
     else:
-        d1 = resto #se nenhuma das condicoes acima for verdadeira d1 = resto
+        d1 = resto
 
-    if d1 != int(titulo[10]): #verifica se o valor encontrado no d1 é igual o da posicao 11 
+    if d1 != int(titulo[10]): #verifica se o valor encontrado no d1 é igual o da posicao 10 
         return False
 
     # segundo digito verificador
-    soma = int(titulo[8]) * 7 + int(titulo[9]) * 8 + d1 * 9 #depois de multiplicados pelos pesos,soma os numeros das posicoes 9,10,11(d1),
+    soma = int(titulo[8]) * 7 + int(titulo[9]) * 8 + d1 * 9
     resto = soma % 11
 
     if resto == 10:
@@ -33,10 +33,6 @@ def validar_titulo(titulo):
     elif resto == 0: # resto 0 tem regra especial em sao paulo e em minas
         d2 = 1 if estado in (1, 2) else 0 # SP e MG usam 1 e o resto usa 0
     else:
-        d2 = resto #se nenhuma das condicoes acima for verdadeira d2 = resto
+        d2 = resto
 
-    return d2 == int(titulo[11]) #mesma coisa,verifica se o valor de d2 é igual ao da posicao 12 
-
-#Python:  0   1   2   3   4   5   6   7     8   9   10  11
-#Humana:  1   2   3   4   5   6   7   8     9  10   11  12
-#Peso:    2   3   4   5   6   7   8   9     7   8    9   
+    return d2 == int(titulo[11]) #mesma coisa,verifica se o valor de d2 é igual ao da posicao 11 

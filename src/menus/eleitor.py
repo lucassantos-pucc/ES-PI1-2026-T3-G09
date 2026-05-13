@@ -1,44 +1,12 @@
 from conector.conexao_banco import conectar
-from db.eleitor_db import inserir_eleitor, atualizar_eleitor, deletar_eleitor
-from db.eleitor_db import buscar_eleitor_por_cpf,verificar_eleitor_existente
-from domain.cpf import validacao_cpf
-from domain.titulo import validar_titulo
-from domain.chave_de_acesso import criar_chave_de_acesso
+from db.eleitordb import inserir_eleitor, atualizar_eleitor, deletar_eleitor
+from db.eleitordb import buscar_eleitor_por_cpf,verificar_eleitor_existente
+from util.cpf import validacao_cpf
+from util.titulo import validar_titulo
+from util.chave_de_acesso import criar_chave_de_acesso
 from criptografia.criptografia_cpf import codificar_cpf, decodificar_cpf
 from criptografia.criptografia_chave_de_acesso import codificar_chave_de_acesso, decodificar_chave_de_acesso
-def menu_eleitor():
-    conexao = conectar()
 
-    if conexao.is_connected():
-        print("Conectado com sucesso no menu eleitor")
-
-    opcao = ""
-
-    while opcao != "0":
-        print("\n===== MENU ELEITOR =====")
-        print("1 - CADASTRAR")
-        print("2 - EDITAR CADASTRO")
-        print("3 - EXCLUIR CADASTRO")
-        print("4 - BUSCAR CADASTRO")
-        print("0 - VOLTAR")
-
-        opcao = input("Escolha uma opção: ")
-
-        match opcao:
-            case "1":
-                cadastrar_eleitor()
-            case "2":
-                editar_eleitor()
-            case "3":
-                excluir_eleitor()
-            case "4":
-                buscar_eleitor()
-            case "0":
-                print("Voltando...")
-            case _:
-                print("Opção inválida")
-
-    conexao.close()
 
 
 
@@ -47,39 +15,51 @@ def cadastrar_eleitor():
     print("\n===== CADASTRAR ELEITOR =====")
 
     nome_completo = input("Digite o nome completo: ")
-    cpf = input("Digite o CPF (11 dígitos): ")
-    titulo = input("Digite o título de eleitor: ")
 
+    cpf = input("Digite o CPF (11 dígitos): ")
     cpf_valido = validacao_cpf(cpf)
+
+    if not cpf_valido:
+        print("CPF inválido. Cadastro não realizado.")
+        return
+
+    titulo = input("Digite o título de eleitor: ")
     titulo_valido = validar_titulo(titulo)
 
-    if titulo_valido:
-        if cpf_valido:
-
-            eleitor_existente = verificar_eleitor_existente(cpf, titulo)
-
-            if eleitor_existente:
-                print("Já existe um eleitor cadastrado com esse CPF ou título.")
-                return
-
-            chave_acesso = criar_chave_de_acesso(nome_completo)
-
-            print(f"Chave de acesso gerada: {chave_acesso}")
-
-            confirmar = input("Confirmar cadastro? (S/N): ")
-
-            if confirmar.upper() != "S":
-                print("Cadastro cancelado.")
-                return
-            cpf_criptografado = codificar_cpf(cpf)
-            chave_criptografado = codificar_chave_de_acesso(chave_acesso)
-            inserir_eleitor(nome_completo, cpf_criptografado, titulo, chave_criptografado, False, False)
-            print("Cadastro realizado com sucesso!")
-
-        else:
-            print("CPF inválido. Cadastro não realizado.")
-    else:
+    if not titulo_valido:
         print("Título de eleitor inválido. Cadastro não realizado.")
+        return
+
+    eleitor_existente = verificar_eleitor_existente(cpf, titulo)
+
+    if eleitor_existente:
+        print("Já existe um eleitor cadastrado com esse CPF ou título.")
+        return
+
+    chave_acesso = criar_chave_de_acesso(nome_completo)
+
+    print(f"Chave de acesso gerada: {chave_acesso}")
+
+    confirmar = input("Confirmar cadastro? (S/N): ")
+
+    if confirmar.upper() != "S":
+        print("Cadastro cancelado.")
+        return
+
+    cpf_criptografado = codificar_cpf(cpf)
+    chave_criptografado = codificar_chave_de_acesso(chave_acesso)
+
+    inserir_eleitor(
+        nome_completo,
+        cpf_criptografado,
+        titulo,
+        chave_criptografado,
+        False,
+        False
+    )
+
+    print("Cadastro realizado com sucesso!")
+
 
 
 

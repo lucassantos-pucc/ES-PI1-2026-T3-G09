@@ -1,6 +1,7 @@
 from conector.conexao_banco import conectar
 from criptografia.criptografia_cpf import codificar_cpf, decodificar_cpf
 from criptografia.criptografia_chave_de_acesso import codificar_chave_de_acesso, decodificar_chave_de_acesso
+
 def inserir_eleitor(nome_completo, cpf, titulo_eleitor, chave_acesso, eh_mesario, ja_votou):
     conexao = conectar()
     cursor = conexao.cursor()

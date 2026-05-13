@@ -40,8 +40,8 @@ def exibir_logs():
 
 
 def menu():
-
-    while True:
+    opcao = 0
+    while (opcao != 7):
 
         print("\n===== AUDITORIA =====")
         print("1 - Abrir votação")
