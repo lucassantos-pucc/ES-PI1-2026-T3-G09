@@ -8,7 +8,7 @@ def criar_chave_de_acesso(nomeCompleto):
         nomeCompleto (str): O nome Completo do Usuario
     
     Returns:
-        str: retorna a Chave de Acesso em String
+        chaveAcesso(str): retorna a Chave de Acesso em String
 
     """
     #Logica -----------------------------------
@@ -29,7 +29,7 @@ def criar_chave_de_acesso(nomeCompleto):
 
     #gerar numeros aleatorios
     while(contador<4):
-        numeros += str(random.randint(1, 9))
+        numeros += str(random.randint(0, 9))
         contador+=1
     
     chaveAcesso+=numeros
