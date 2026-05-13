@@ -1,9 +1,9 @@
 from conector.conexao_banco import conectar
 from db.eleitordb import inserir_eleitor, atualizar_eleitor, deletar_eleitor
 from db.eleitordb import buscar_eleitor_por_cpf,verificar_eleitor_existente
-from cpf import validacao_cpf
-from titulo import validar_titulo
-from chave_de_acesso import criar_chave_de_acesso
+from util.cpf import validacao_cpf
+from util.titulo import validar_titulo
+from util.chave_de_acesso import criar_chave_de_acesso
 from criptografia.criptografia_cpf import codificar_cpf, decodificar_cpf
 from criptografia.criptografia_chave_de_acesso import codificar_chave_de_acesso, decodificar_chave_de_acesso
 
