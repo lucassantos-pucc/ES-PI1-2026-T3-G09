@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from util.auditoria import registrar_log
+
 from db.candidatodb import buscar_candidato_por_numero
 from db.eleitordb import (
     buscar_eleitor_ja_votou,
@@ -35,6 +37,7 @@ def abrir_sistema_votacao():
 
     if not valido:
         print("Falha na validação do mesário")
+        registrar_log("ALERTA Tentativa de acesso negado")
         return False
 
     print("Mesário validado com sucesso!")
@@ -57,6 +60,7 @@ def abrir_sistema_votacao():
         print(f"Nome: {candidato[0]} | Número: {candidato[1]} | Partido: {candidato[2]} | Votos: {candidato[3]}")
 
     print("\nUrna liberada para votação.")
+    registrar_log("ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
     return True
 
 
@@ -101,6 +105,7 @@ def votar():
                     marcar_eleitor_como_votou(titulo, cpf4, chave)
 
                     print("Voto registrado com sucesso!")
+                    registrar_log("SUCESSO: Voto realizado com sucesso")
                 else:
                     print("Candidato não existe.")
         else:
@@ -136,6 +141,7 @@ def encerrar_sistema_votacao():
                     id_sessao = sessao[0]
                     encerrar_sessao_votacao(id_sessao)
                     print("Votação encerrada com sucesso!")
+                    registrar_log("ENCERRAMENTO: Votação finalizada com sucesso.")
                 else:
                     print("Chave de confirmação incorreta")
             else:
@@ -144,6 +150,7 @@ def encerrar_sistema_votacao():
             print("Não existe sessão aberta.")
     else:
         print("Falha na validação do mesário")
+        registrar_log("ALERTA Tentativa de acesso negado")
 
 
 def log():
