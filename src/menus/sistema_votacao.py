@@ -1,6 +1,8 @@
 from datetime import datetime
 
 from conector.conexao_banco import conectar
+from util.auditoria import registrar_log
+
 from db.candidatodb import buscar_candidato_por_numero
 from db.eleitordb import (
     buscar_eleitor_ja_votou,
@@ -19,6 +21,11 @@ from db.votarbd import inserir_voto
 
 
 def abrir_sistema_votacao():
+    """Abre o sistema de votação após validar o mesário.
+
+    Valida as credenciais do mesário, verifica se já existe uma sessão aberta,
+    reseta o status de votação dos eleitores, cria uma nova sessão e exibe a zerésima.
+    """
     print("\n===== ABRIR SISTEMA DE VOTAÇÃO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -31,6 +38,7 @@ def abrir_sistema_votacao():
 
     if not valido:
         print("Falha na validação do mesário")
+        registrar_log("ALERTA Tentativa de acesso negado")
         return False
 
     print("Mesário validado com sucesso!")
@@ -53,10 +61,16 @@ def abrir_sistema_votacao():
         print(f"Nome: {candidato[0]} | Número: {candidato[1]} | Partido: {candidato[2]} | Votos: {candidato[3]}")
 
     print("\nUrna liberada para votação.")
+    registrar_log("ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
     return True
 
 
 def votar():
+    """Registra o voto de um eleitor autenticado na sessão de votação aberta.
+
+    Valida as credenciais do eleitor, verifica se a sessão está aberta,
+    confirma que o eleitor ainda não votou e registra o voto com protocolo.
+    """
     print("\n===== VOTAR =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -92,6 +106,7 @@ def votar():
                     marcar_eleitor_como_votou(titulo, cpf4, chave)
 
                     print("Voto registrado com sucesso!")
+                    registrar_log("SUCESSO: Voto realizado com sucesso")
                 else:
                     print("Candidato não existe.")
         else:
@@ -101,6 +116,11 @@ def votar():
 
 
 def encerrar_sistema_votacao():
+    """Encerra a sessão de votação após validar o mesário e confirmar o encerramento.
+
+    Valida as credenciais do mesário, verifica se existe sessão aberta,
+    solicita confirmação e chave de acesso antes de encerrar.
+    """
     print("\n===== ENCERRAR SISTEMA DE VOTAÇÃO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -122,6 +142,7 @@ def encerrar_sistema_votacao():
                     id_sessao = sessao[0]
                     encerrar_sessao_votacao(id_sessao)
                     print("Votação encerrada com sucesso!")
+                    registrar_log("ENCERRAMENTO: Votação finalizada com sucesso.")
                 else:
                     print("Chave de confirmação incorreta")
             else:
@@ -130,9 +151,11 @@ def encerrar_sistema_votacao():
             print("Não existe sessão aberta.")
     else:
         print("Falha na validação do mesário")
+        registrar_log("ALERTA Tentativa de acesso negado")
 
 
 def log():
+    """Exibe os logs de ocorrência do sistema de votação."""
     pass
 
 def protocolo():
@@ -160,5 +183,5 @@ def protocolo():
 
 
 def resultados_votacao():
+    """Exibe os resultados da votação da sessão encerrada."""
     print("Exibindo resultados da votação...")
-

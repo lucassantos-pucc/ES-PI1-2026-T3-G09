@@ -9,6 +9,11 @@ from menus.sistema_votacao import (
 
 
 def menu_votacao():
+    """Exibe o menu principal do sistema de votação e processa a opção escolhida.
+
+    Permite abrir o sistema, registrar votos, encerrar a votação,
+    acessar a auditoria e consultar os resultados.
+    """
     opcao = ""
 
     while opcao != "0":
@@ -41,6 +46,11 @@ def menu_votacao():
 
 
 def menu_auditoria_votacao():
+    """Exibe o menu de auditoria da votação e processa a opção escolhida.
+
+    Permite consultar os logs de ocorrência e os protocolos de votação
+    gerados durante o processo eleitoral.
+    """
     opcao = ""
 
     while opcao != "0":
@@ -71,6 +81,11 @@ def menu_auditoria_votacao():
 
 
 def menu_resultado_votacao():
+    """Exibe o menu de resultados da votação e processa a opção escolhida.
+
+    Permite consultar o boletim da urna, estatísticas de comparecimento,
+    votos por partido e realizar a validação de integridade dos dados.
+    """
     opcao = ""
 
     while opcao != "0":
@@ -91,4 +106,3 @@ def menu_resultado_votacao():
                 pass
             case _:
                 print("Opção inválida")
-

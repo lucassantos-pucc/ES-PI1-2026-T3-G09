@@ -1,3 +1,8 @@
+"""Sistema de votação.
+
+Entrada do do sistema de votação. Realiza a conexão com o banco de dados
+e exibe o menu principal para acesso ao gerenciamento e à votação.
+"""
 from conector.conexao_banco import conectar
 from menus.menu_gerenciamento import menu_gerenciamento
 from menus.menu_votacao import menu_votacao
