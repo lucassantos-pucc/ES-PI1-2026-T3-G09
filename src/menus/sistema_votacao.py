@@ -1,8 +1,7 @@
 from datetime import datetime
 
-from conector.conexao_banco import conectar
-from util.auditoria import registrar_log
-
+from auditoria import registrar_log
+from protocolo_votacao import criar_protocolo_votacao
 from db.candidatodb import buscar_candidato_por_numero
 from db.eleitordb import (
     buscar_eleitor_ja_votou,
@@ -17,15 +16,10 @@ from db.sessao_votacaodb import (
     inserir_sessao_votacao,
     listar_zeresima_por_sessao,
 )
-from db.votarbd import inserir_voto
+from db.votarbd import inserir_voto, listar_protocolos_votacao
 
 
 def abrir_sistema_votacao():
-    """Abre o sistema de votação após validar o mesário.
-
-    Valida as credenciais do mesário, verifica se já existe uma sessão aberta,
-    reseta o status de votação dos eleitores, cria uma nova sessão e exibe a zerésima.
-    """
     print("\n===== ABRIR SISTEMA DE VOTAÇÃO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -38,7 +32,7 @@ def abrir_sistema_votacao():
 
     if not valido:
         print("Falha na validação do mesário")
-        registrar_log("ALERTA Tentativa de acesso negado")
+        registrar_log("ALERTA: Falha na validação do mesário para abrir votação.")
         return False
 
     print("Mesário validado com sucesso!")
@@ -46,6 +40,7 @@ def abrir_sistema_votacao():
 
     if sessao_existente:
         print("Já existe uma sessão de votação aberta.")
+        registrar_log("ALERTA: Tentativa de abrir votação com sessão já aberta.")
         return True
 
     resetar_status_votacao_eleitores()
@@ -66,11 +61,6 @@ def abrir_sistema_votacao():
 
 
 def votar():
-    """Registra o voto de um eleitor autenticado na sessão de votação aberta.
-
-    Valida as credenciais do eleitor, verifica se a sessão está aberta,
-    confirma que o eleitor ainda não votou e registra o voto com protocolo.
-    """
     print("\n===== VOTAR =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -88,6 +78,7 @@ def votar():
 
             if voto_existente:
                 print("Este eleitor já votou nesta sessão.")
+                registrar_log("ALERTA: Tentativa de voto duplo.")
             else:
                 numero_digitado = int(input("Digite o número do candidato: "))
                 candidato = buscar_candidato_por_numero(numero_digitado)
@@ -106,21 +97,20 @@ def votar():
                     marcar_eleitor_como_votou(titulo, cpf4, chave)
 
                     print("Voto registrado com sucesso!")
-                    registrar_log("SUCESSO: Voto realizado com sucesso")
+                    print(f"Protocolo de votação: {protocolo}")
+                    registrar_log(f"SUCESSO: Voto registrado. Protocolo: {protocolo}.")
                 else:
                     print("Candidato não existe.")
+                    registrar_log(f"ALERTA: Tentativa de voto em candidato inexistente: {numero_digitado}.")
         else:
             print("Não existe sessão aberta.")
+            registrar_log("ALERTA: Tentativa de votar sem sessão aberta.")
     else:
         print("Eleitor não encontrado ou dados inválidos.")
+        registrar_log("ALERTA: Tentativa de voto com eleitor não encontrado ou dados inválidos.")
 
 
 def encerrar_sistema_votacao():
-    """Encerra a sessão de votação após validar o mesário e confirmar o encerramento.
-
-    Valida as credenciais do mesário, verifica se existe sessão aberta,
-    solicita confirmação e chave de acesso antes de encerrar.
-    """
     print("\n===== ENCERRAR SISTEMA DE VOTAÇÃO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -145,43 +135,37 @@ def encerrar_sistema_votacao():
                     registrar_log("ENCERRAMENTO: Votação finalizada com sucesso.")
                 else:
                     print("Chave de confirmação incorreta")
+                    registrar_log("ALERTA: Chave incorreta na confirmação de encerramento.")
             else:
                 print("Encerramento cancelado")
+                registrar_log("INFO: Encerramento da votação cancelado.")
         else:
             print("Não existe sessão aberta.")
+            registrar_log("ALERTA: Tentativa de encerrar votação sem sessão aberta.")
     else:
         print("Falha na validação do mesário")
-        registrar_log("ALERTA Tentativa de acesso negado")
+        registrar_log("ALERTA: Falha na validação do mesário para encerrar votação.")
 
 
-def log():
-    """Exibe os logs de ocorrência do sistema de votação."""
-    pass
+def auditoria_votacao():
+    print("Exibindo resultados da votação...")
+
 
 def protocolo():
+    protocolos = listar_protocolos_votacao()
 
-    """
-    faz a conexão com o banco e retorna todos os protocolos de votação em ordem alfabetica
+    if not protocolos:
+        print("Nenhum protocolo de votação encontrado.")
+        return
 
-    
-    Returns:
-        resultado (tuple): retorna todos os protocolos do banco de dados em formato de tupla
+    print("\n===== PROTOCOLOS DE VOTAÇÃO =====")
 
-    """
-    conexao = conectar()
-    cursor = conexao.cursor()
-
-    sql = "SELECT protocolo FROM voto order by protocolo"
-    cursor.execute(sql)
-
-    resultado = cursor.fetchall()
-
-    cursor.close()
-    conexao.close()
-
-    return resultado
+    for item in protocolos:
+        print(
+            f"Voto: {item[0]} | Candidato: {item[1]} | Sessão: {item[2]} | "
+            f"Data/Hora: {item[3]} | Protocolo: {item[4]}"
+        )
 
 
 def resultados_votacao():
-    """Exibe os resultados da votação da sessão encerrada."""
     print("Exibindo resultados da votação...")

@@ -1,36 +1,30 @@
 from conector.conexao_banco import conectar
 from db.eleitordb import inserir_eleitor, atualizar_eleitor, deletar_eleitor
 from db.eleitordb import buscar_eleitor_por_cpf,verificar_eleitor_existente
-from util.cpf import validacao_cpf
-from util.titulo import validar_titulo
-from util.chave_de_acesso import criar_chave_de_acesso
+from cpf import validacao_cpf
+from titulo import validar_titulo
+from chave_de_acesso import criar_chave_de_acesso
 from criptografia.criptografia_cpf import codificar_cpf, decodificar_cpf
 from criptografia.criptografia_chave_de_acesso import codificar_chave_de_acesso, decodificar_chave_de_acesso
 
 
-def cadastrar_eleitor():
-    """Realiza o cadastro de um novo eleitor no sistema.
 
-    Valida o CPF e o título de eleitor, verifica se o eleitor já existe,
-    gera uma chave de acesso e armazena os dados criptografados no banco.
-    """
+
+
+def cadastrar_eleitor():
     print("\n===== CADASTRAR ELEITOR =====")
 
     nome_completo = input("Digite o nome completo: ")
 
     cpf = input("Digite o CPF (11 dígitos): ")
-    cpf_valido = validacao_cpf(cpf)
 
-    if not cpf_valido:
-        print("CPF inválido. Cadastro não realizado.")
-        return
+    while not validacao_cpf(cpf):
+        cpf = input("CPF inválido. Digite novamente o CPF (11 dígitos): ")
 
     titulo = input("Digite o título de eleitor: ")
-    titulo_valido = validar_titulo(titulo)
 
-    if not titulo_valido:
-        print("Título de eleitor inválido. Cadastro não realizado.")
-        return
+    while not validar_titulo(titulo):
+        titulo = input("Título inválido. Digite novamente o título de eleitor: ")
 
     eleitor_existente = verificar_eleitor_existente(cpf, titulo)
 
@@ -63,12 +57,9 @@ def cadastrar_eleitor():
     print("Cadastro realizado com sucesso!")
 
 
-def editar_eleitor():
-    """Edita o cadastro de um eleitor existente no sistema.
 
-    Autentica o eleitor, exibe os dados atuais, solicita os novos dados,
-    valida CPF e título e atualiza o registro com uma nova chave de acesso gerada.
-    """
+
+def editar_eleitor():
     print("\n===== EDITAR CADASTRO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -121,11 +112,6 @@ def editar_eleitor():
 
 
 def excluir_eleitor():
-    """Exclui o cadastro de um eleitor do sistema.
-
-    Autentica o eleitor, exibe seus dados e solicita confirmação
-    antes de remover permanentemente o registro do banco de dados.
-    """
     print("\n===== EXCLUIR CADASTRO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -156,11 +142,6 @@ def excluir_eleitor():
 
 
 def buscar_eleitor():
-    """Busca e exibe os dados de um eleitor autenticado no sistema.
-
-    Autentica o eleitor pelas credenciais informadas e exibe seus dados
-    descriptografados, incluindo nome, CPF, título e status de mesário e votação.
-    """
     print("\n===== BUSCAR CADASTRO =====")
 
     titulo = input("Digite o título de eleitor: ")

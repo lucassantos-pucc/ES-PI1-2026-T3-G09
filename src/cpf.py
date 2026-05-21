@@ -1,10 +1,4 @@
 def validacao_cpf(cpf):
-    """Valida um CPF brasileiro verificando os dois dígitos verificadores.
-
-    Calcula os dígitos verificadores esperados a partir dos nove primeiros
-    dígitos e os compara com os dígitos informados. Retorna True se válido
-    ou False caso contrário.
-    """
     # Cria uma função chamada validacao_cpf que recebe o CPF como parâmetro
 
 
@@ -33,7 +27,6 @@ def validacao_cpf(cpf):
 
     if len(cpf) != 11 or not cpf.isdigit():
         return False
-
 
 
 

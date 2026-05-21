@@ -1,7 +1,18 @@
 from datetime import datetime
+from pathlib import Path
 
 
-ARQUIVO_LOG = "logs_ocorrencias.txt"
+ARQUIVO_LOG = Path(__file__).with_name("logs_ocorrencias.txt")
+
+
+def criar_arquivo_log():
+    """
+    Cria o arquivo txt de logs, caso ele ainda nao exista.
+    """
+
+    if not ARQUIVO_LOG.exists():
+        with open(ARQUIVO_LOG, "w", encoding="utf-8") as arquivo:
+            arquivo.write("")
 
 
 def registrar_log(mensagem):
@@ -9,6 +20,8 @@ def registrar_log(mensagem):
     Cria automaticamente o arquivo txt
     e registra os logs do sistema.
     """
+
+    criar_arquivo_log()
 
     data_hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -24,19 +37,19 @@ def exibir_logs():
     Exibe os logs registrados.
     """
 
-    try:
+    criar_arquivo_log()
 
-        with open(ARQUIVO_LOG, "r", encoding="utf-8") as arquivo:
+    with open(ARQUIVO_LOG, "r", encoding="utf-8") as arquivo:
+        linhas = arquivo.readlines()
 
-            print("\n===== LOGS DE OCORRÊNCIAS =====\n")
-
-            for linha in arquivo:
-
-                print(linha.strip())
-
-    except FileNotFoundError:
-
+    if not linhas:
         print("Nenhum log encontrado.")
+        return
+
+    print("\n===== LOGS DE OCORRÊNCIAS =====\n")
+
+    for linha in linhas:
+        print(linha.strip())
 
 
 def menu():
@@ -108,4 +121,5 @@ def menu():
             print("Opção inválida.")
 
 
-menu()
+if __name__ == "__main__":
+    menu()
