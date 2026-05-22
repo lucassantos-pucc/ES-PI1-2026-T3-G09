@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from auditoria import registrar_log
-from protocolo_votacao import criar_protocolo_votacao
+from utilidade_geral.auditoria import registrar_log
+from utilidade_geral.protocolo_votacao import criar_protocolo_votacao
 from db.candidatodb import buscar_candidato_por_numero
 from db.eleitordb import (
     buscar_eleitor_ja_votou,

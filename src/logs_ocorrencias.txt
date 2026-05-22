@@ -1,8 +1,0 @@
-
-[2026-05-14 10:40:28] ENCERRAMENTO: Votação finalizada com sucesso.
-[2026-05-14 11:36:15] ALERTA: Tentativa de encerrar votação sem sessão aberta.
-[2026-05-14 11:59:27] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.
-[2026-05-14 12:01:43] SUCESSO: Voto registrado. Protocolo: VTE261086415.
-[2026-05-14 12:03:48] ALERTA: Tentativa de voto duplo.
-[2026-05-14 12:08:01] ENCERRAMENTO: Votação finalizada com sucesso.
-[2026-05-21 14:54:13] ALERTA: Falha na validação do mesário para abrir votação.

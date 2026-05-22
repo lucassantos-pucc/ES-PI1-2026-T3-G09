@@ -1,4 +1,4 @@
-from auditoria import exibir_logs
+from utilidade_geral.auditoria import exibir_logs
 from menus.sistema_votacao import (
     abrir_sistema_votacao,
     encerrar_sistema_votacao,
