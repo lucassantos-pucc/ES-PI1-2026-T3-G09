@@ -1,40 +1,40 @@
-def codificar_cpf(cpfstring):
+def codificar_protocolo(protocoloString):
     """
-    Criptografa um CPF usando Logica da Cifra de Hill.
+    Criptografa um protocolo de votação usando Logica da Cifra de Hill.
 
     Args:
-        cpfstring (str): CPF do usuario (somente Numeros)
+        protocoloString (str): protocolo do usuario
     
     Returns:
-        resultado (str): CPF do usuario criptografado em formato string
+        resultado (str): protocolo de votação do usuario criptografado em formato string
 
     """
     #Logica -----------
 
     alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
-    #pega o cpf em string e passa pra uma matriz
-    cpf = []
+    #pega o protocolo em string e passa pra uma matriz
+    protocolo = []
     contador = 0
     caractere = ""
     valorCorrespondente = 0
-    while (contador < len(cpfstring)):
-        caractere= cpfstring[contador]
+    while (contador < len(protocoloString)):
+        caractere= protocoloString[contador]
         valorCorrespondente = alfabeto.index(caractere)
-        cpf.append(valorCorrespondente)
+        protocolo.append(valorCorrespondente)
         contador += 1
 
-    matrizCpfCriptografado = []
+    matrizProtocoloCriptografado = []
     resultado = ""
 
     #chave escolhida
     chave = [[11,8,3],[7,6,2],[10,5,8]]
     
-    # quebra o cpf em 4 vetores 1x3
-    vetor1 = [[cpf[0]],[cpf[1]],[cpf[2]]]
-    vetor2 = [[cpf[3]],[cpf[4]],[cpf[5]]]
-    vetor3 = [[cpf[6]],[cpf[7]],[cpf[8]]]
-    vetor4 = [[cpf[9]],[cpf[10]],[0]] # adicionando mais um numero para quebrar em vetores de 3x1
+    # quebra o protocolo em 4 vetores 1x3
+    vetor1 = [[protocolo[0]],[protocolo[1]],[protocolo[2]]]
+    vetor2 = [[protocolo[3]],[protocolo[4]],[protocolo[5]]]
+    vetor3 = [[protocolo[6]],[protocolo[7]],[protocolo[8]]]
+    vetor4 = [[protocolo[9]],[protocolo[10]],protocolo[11]] 
 
     #criptografando
     codificado1 = [
@@ -62,35 +62,36 @@ def codificar_cpf(cpfstring):
     ]
 
     #adicionando vetores para matriz criptografada
-    matrizCpfCriptografado.append(codificado1)
-    matrizCpfCriptografado.append(codificado2)
-    matrizCpfCriptografado.append(codificado3)
-    matrizCpfCriptografado.append(codificado4)
+    matrizProtocoloCriptografado.append(codificado1)
+    matrizProtocoloCriptografado.append(codificado2)
+    matrizProtocoloCriptografado.append(codificado3)
+    matrizProtocoloCriptografado.append(codificado4)
 
     #convertendo numeros para o alfabeto
     linha = 0
     valorCorrespondente = 0
+
     #vai passando de linha em linha da matriz
-    while(linha<len(matrizCpfCriptografado)):
+    while(linha<len(matrizProtocoloCriptografado)):
         coluna = 0
         #vai passando de coluna em coluna
-        while(coluna<len(matrizCpfCriptografado[linha])):
-            valorCorrespondente = matrizCpfCriptografado[linha][coluna] #pega o indice da matriz e transforma em seu correspondente do alfabeto
+        while(coluna<len(matrizProtocoloCriptografado[linha])):
+            valorCorrespondente = matrizProtocoloCriptografado[linha][coluna] #pega o indice da matriz e transforma em seu correspondente do alfabeto
             resultado+=alfabeto[valorCorrespondente]
             coluna+=1
         linha+=1
 
     return resultado
 
-def decodificar_cpf(cpfCriptografado):
+def decodificar_protocolo(protocoloCriptografado):
     """
-    Descriptografa o CPF criptografado.
+    Descriptografa o protocolo criptografado.
 
     Args:
-        cpfCriptografado (str): CPF do usuario criptografado.
+        protocoloCriptografado (str): protocolo de votação do usuario criptografado.
     
     Returns:
-        str: CPF do usuario em formato string
+        resultado (str): protocolo de votação do usuario em formato string
 
     """
 
@@ -98,7 +99,7 @@ def decodificar_cpf(cpfCriptografado):
 
     alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
-    matrizCpfDecodificado = []
+    matrizprotocoloDecodificado = []
     
     chaveInversa = [[4,1,8], [14,2,17], [9,17,12]]
 
@@ -108,18 +109,18 @@ def decodificar_cpf(cpfCriptografado):
     valorCorrespondente = 0
     caractere = ""
     #vai passando de caractere em linha da string
-    while(contador<len(cpfCriptografado)):
+    while(contador<len(protocoloCriptografado)):
         
-        caractere = cpfCriptografado[contador]
+        caractere = protocoloCriptografado[contador]
         valorCorrespondente = alfabeto.index(caractere) #pega a posição do caractere no alfabeto (seu valor correspondente)
         numerosCriptografados.append(valorCorrespondente)
         contador+=1
 
-    # quebra o cpfCriptografado em 4 vetores 1x3
+    # quebra o protocoloCriptografado em 4 vetores 1x3
     vetor1 = [[numerosCriptografados[0]],[numerosCriptografados[1]],[numerosCriptografados[2]]]
     vetor2 = [[numerosCriptografados[3]],[numerosCriptografados[4]],[numerosCriptografados[5]]]
     vetor3 = [[numerosCriptografados[6]],[numerosCriptografados[7]],[numerosCriptografados[8]]]
-    vetor4 = [[numerosCriptografados[9]],[numerosCriptografados[10]],[numerosCriptografados[11]]] # adicionando valor para contas de matriz
+    vetor4 = [[numerosCriptografados[9]],[numerosCriptografados[10]],[numerosCriptografados[11]]]
 
     decodificado1 = [
         (chaveInversa[0][0]*vetor1[0][0] + chaveInversa[0][1]*vetor1[1][0] + chaveInversa[0][2]*vetor1[2][0]) % 36,
@@ -145,17 +146,17 @@ def decodificar_cpf(cpfCriptografado):
         (chaveInversa[2][0]*vetor4[0][0] + chaveInversa[2][1]*vetor4[1][0] + chaveInversa[2][2]*vetor4[2][0]) % 36
     ]
 
-    matrizCpfDecodificado.append(decodificado1)
-    matrizCpfDecodificado.append(decodificado2)
-    matrizCpfDecodificado.append(decodificado3)
-    matrizCpfDecodificado.append(decodificado4)
+    matrizprotocoloDecodificado.append(decodificado1)
+    matrizprotocoloDecodificado.append(decodificado2)
+    matrizprotocoloDecodificado.append(decodificado3)
+    matrizprotocoloDecodificado.append(decodificado4)
 
     #transformando a matriz em string
     contador = 0
     resultado = ""
     caractere = ""
     while (contador < 4):
-        linha = matrizCpfDecodificado[contador]
+        linha = matrizprotocoloDecodificado[contador]
         contador2 = 0
         while (contador2 < 3):
             caractere = linha[contador2]
@@ -163,6 +164,4 @@ def decodificar_cpf(cpfCriptografado):
             contador2 += 1
         contador += 1
 
-    # remove o ultimo valor adicionado na codificação
-    resultado = resultado[:-1] 
     return resultado
