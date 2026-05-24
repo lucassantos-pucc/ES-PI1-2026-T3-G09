@@ -16,6 +16,9 @@ def cadastrar_eleitor():
 
     nome_completo = input("Digite o nome completo: ")
 
+    while " " not in nome_completo.strip():
+        nome_completo = input("Nome incompleto. Digite o nome completo: ")
+
     cpf = input("Digite o CPF (11 dígitos): ")
 
     while not validacao_cpf(cpf):
