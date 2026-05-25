@@ -1,4 +1,5 @@
 from utilidade_geral.auditoria import exibir_logs
+from db.boletim_de_urnadb import boletim_de_urna_busca_banco
 from menus.sistema_votacao import (
     abrir_sistema_votacao,
     encerrar_sistema_votacao,
@@ -6,6 +7,7 @@ from menus.sistema_votacao import (
     resultados_votacao as resultado_base,
     votar,
 )
+from utilidade_geral.boletim_de_urna import boletim_de_urna
 
 
 def menu_votacao():
@@ -79,7 +81,15 @@ def menu_resultado_votacao():
         print("\033c", end="")
 
         match opcao:
-            case "1" | "2" | "3" | "4":
+            case "1": 
+                resultado = boletim_de_urna_busca_banco()
+                boletim_de_urna(resultado)
+            case "2":
+                pass
+            case "3":
+                pass
+            case "4":
+                pass
                 resultado_base()
             case "0":
                 pass
