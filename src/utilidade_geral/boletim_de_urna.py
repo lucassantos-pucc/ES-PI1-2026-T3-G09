@@ -25,3 +25,21 @@ def boletim_de_urna(resultado):
 
     print("\nVotos nulos:", int(nulos))
 
+
+def estatistica_comparecimento(resultado):
+    total_eleitores = resultado[0]
+    total_votaram = resultado[1]
+
+    if total_eleitores == 0:
+        print("Nenhum eleitor cadastrado.")
+        return
+
+    nao_votaram = total_eleitores - total_votaram
+    percentual_votaram = (total_votaram * 100) / total_eleitores
+    percentual_nao_votaram = (nao_votaram * 100) / total_eleitores
+
+    print("\n===== ESTATÍSTICA DE COMPARECIMENTO =====")
+    print(f"Total de eleitores aptos : {total_eleitores}")
+    print(f"Total que votaram        : {total_votaram} ({percentual_votaram:.2f}%)")
+    print(f"Total que não votaram    : {nao_votaram} ({percentual_nao_votaram:.2f}%)")
+    
