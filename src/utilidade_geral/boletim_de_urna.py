@@ -26,7 +26,7 @@ def boletim_de_urna(resultado):
     print("\nVotos nulos:", int(nulos))
 
 
-def estatistica_comparecimento(resultado):
+def estatistica_comparecimento(resultado):#falta ainda conectar com o banco de dados e fazer os imports
     total_eleitores = resultado[0]
     total_votaram = resultado[1]
 
