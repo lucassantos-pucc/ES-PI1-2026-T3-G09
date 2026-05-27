@@ -31,3 +31,27 @@ def boletim_de_urna_busca_banco():
     conexao.close()
 
     return resultado
+
+
+def estatistica_comparecimento_busca_banco():
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    # query conta o total de eleitores cadastrados
+    sql = "SELECT COUNT(*) FROM eleitor;"
+
+    # query conta o total de eleitores que votaram
+    sql2 = "SELECT COUNT(*) FROM eleitor WHERE ja_votou = TRUE;"
+
+    cursor.execute(sql)
+    total_eleitores = cursor.fetchone()[0]
+
+    cursor.execute(sql2)
+    total_votaram = cursor.fetchone()[0]
+
+    resultado = (total_eleitores, total_votaram)
+
+    cursor.close()
+    conexao.close()
+
+    return resultado

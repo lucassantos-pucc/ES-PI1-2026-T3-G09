@@ -1,5 +1,5 @@
 from utilidade_geral.auditoria import exibir_logs
-from db.boletim_de_urnadb import boletim_de_urna_busca_banco
+from db.boletim_de_urnadb import boletim_de_urna_busca_banco, estatistica_comparecimento_busca_banco
 from menus.sistema_votacao import (
     abrir_sistema_votacao,
     encerrar_sistema_votacao,
@@ -7,7 +7,7 @@ from menus.sistema_votacao import (
     resultados_votacao as resultado_base,
     votar,
 )
-from utilidade_geral.boletim_de_urna import boletim_de_urna
+from utilidade_geral.boletim_de_urna import boletim_de_urna, estatistica_comparecimento
 
 
 def menu_votacao():
@@ -85,7 +85,8 @@ def menu_resultado_votacao():
                 resultado = boletim_de_urna_busca_banco()
                 boletim_de_urna(resultado)
             case "2":
-                pass
+                resultado = estatistica_comparecimento_busca_banco()
+                estatistica_comparecimento(resultado)
             case "3":
                 pass
             case "4":
