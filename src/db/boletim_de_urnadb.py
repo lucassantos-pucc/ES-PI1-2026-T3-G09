@@ -55,3 +55,6 @@ def estatistica_comparecimento_busca_banco():
     conexao.close()
 
     return resultado
+
+def declarar_vencedor_busca_banco():
+    pass
