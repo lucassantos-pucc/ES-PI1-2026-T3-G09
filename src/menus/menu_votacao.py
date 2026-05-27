@@ -75,6 +75,7 @@ def menu_resultado_votacao():
         print("2 - ESTATISTICA DE COMPARECIMENTO")
         print("3 - VOTOS POR PARTIDO")
         print("4 - VALIDACAO DE INTEGRIDADE")
+        print("5 - FIM DA AUDIORIA")
         print("0 - VOLTAR")
 
         opcao = input("Escolha uma opção: ")
@@ -90,8 +91,9 @@ def menu_resultado_votacao():
             case "3":
                 pass
             case "4":
-                pass
                 resultado_base()
+            case "5":
+                pass
             case "0":
                 pass
             case _:
