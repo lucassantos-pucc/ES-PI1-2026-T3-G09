@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from criptografia.criptografia_protocolo import (codificar_protocolo, decodificar_protocolo)
 from utilidade_geral.auditoria import registrar_log
 from utilidade_geral.protocolo_votacao import criar_protocolo_votacao
 from db.candidatodb import buscar_candidato_por_numero
@@ -96,12 +97,13 @@ def votar():
                 if candidato:
                     agora = datetime.now()
                     protocolo = criar_protocolo_votacao(numero_digitado)
+                    protocoloCriptografado = codificar_protocolo(protocolo)
 
                     inserir_voto(
                         numero_digitado,
                         id_sessao,
                         agora,
-                        protocolo
+                        protocoloCriptografado
                     )
 
                     marcar_eleitor_como_votou(titulo, cpf4, chave)
@@ -181,9 +183,10 @@ def protocolo():
     print("\n===== PROTOCOLOS DE VOTAÇÃO =====")
 
     for item in protocolos:
+        protocolo = decodificar_protocolo(item[4])
         print(
             f"Voto: {item[0]} | Candidato: {item[1]} | Sessão: {item[2]} | "
-            f"Data/Hora: {item[3]} | Protocolo: {item[4]}"
+            f"Data/Hora: {item[3]} | Protocolo: {protocolo}"
         )
 
 

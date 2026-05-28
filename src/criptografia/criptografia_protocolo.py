@@ -34,7 +34,7 @@ def codificar_protocolo(protocoloString):
     vetor1 = [[protocolo[0]],[protocolo[1]],[protocolo[2]]]
     vetor2 = [[protocolo[3]],[protocolo[4]],[protocolo[5]]]
     vetor3 = [[protocolo[6]],[protocolo[7]],[protocolo[8]]]
-    vetor4 = [[protocolo[9]],[protocolo[10]],protocolo[11]] 
+    vetor4 = [[protocolo[9]],[protocolo[10]],[protocolo[11]]] 
 
     #criptografando
     codificado1 = [
@@ -101,7 +101,7 @@ def decodificar_protocolo(protocoloCriptografado):
 
     matrizprotocoloDecodificado = []
     
-    chaveInversa = [[4,1,8], [14,2,17], [9,17,12]]
+    chaveInversa = [[2,5,34], [0,22,17], [29,7,10]]
 
     #pegando valores correspondentes de acorsdo com o alfabeto
     contador = 0
