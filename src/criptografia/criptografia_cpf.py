@@ -100,7 +100,7 @@ def decodificar_cpf(cpfCriptografado):
 
     matrizCpfDecodificado = []
     
-    chaveInversa = [[4,1,8], [14,2,17], [9,17,12]]
+    chaveInversa = [[2,5,34], [0,22,17], [29,7,10]]
 
     #pegando valores correspondentes de acorsdo com o alfabeto
     contador = 0

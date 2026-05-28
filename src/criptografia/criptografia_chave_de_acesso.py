@@ -97,7 +97,7 @@ def decodificar_chave_de_acesso(chaveAcessoCriptografada):
 
     matrizChaveAcessoDecodificada = []
 
-    chaveInversa = [[4,1,8], [14,2,17], [9,17,12]]
+    chaveInversa = [[2,5,34], [0,22,17], [29,7,10]]
 
     caractere = 0
     # pega os valores correspondentes ao alfabeto
