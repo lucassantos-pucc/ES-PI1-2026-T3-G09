@@ -63,4 +63,26 @@ def estatistica_comparecimento_busca_banco():
     return resultado
 
 def declarar_vencedor_busca_banco():
-    pass
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    # Query para agrupar, contar e ordenar pelo mais votado
+    sql = """
+        SELECT numero_candidato 
+        FROM voto 
+        GROUP BY numero_candidato 
+        ORDER BY COUNT(*) DESC 
+        LIMIT 1
+    """
+
+    cursor.execute(sql)
+    resultado_tupla = cursor.fetchone() # Retorna algo como (10,)
+
+    cursor.close()
+    conexao.close()
+
+    # Se a tabela não estiver vazia, retorna o valor dentro da tupla
+    if resultado_tupla:
+        return resultado_tupla[0]
+    
+    return None

@@ -44,11 +44,12 @@ def estatistica_comparecimento(resultado):#falta ainda conectar com o banco de d
     print(f"Total que não votaram    : {nao_votaram} ({percentual_nao_votaram:.2f}%)")
 
 def declarar_vencedor(resultado):
-    vencedor, nome, num, partido, total_votos = resultado
+    #vencedor, nome, num, partido, total_votos = resultado
+    vencedor = resultado[0]
     
     print(f"Vencedor da eleicao: {vencedor}")
-    print(f"Nome: {nome}")
-    print(f"Numero: {num}")
-    print(f"partido: {partido}")
-    print(f"Total de votos Obtidos: {total_votos}")
+    #print(f"Nome: {nome}")
+    #print(f"Numero: {num}")
+    #print(f"partido: {partido}")
+    #print(f"Total de votos Obtidos: {total_votos}")
     
