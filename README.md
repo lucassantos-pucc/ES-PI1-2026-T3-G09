@@ -40,18 +40,16 @@ Este projeto consiste no desenvolvimento do backend de um sistema de votação d
 
 ## ORGANIZAÇÃO E LÓGICA DO PROJETO
 
-### Fluxogramas
+### Fluxogramas do funcionamento do menu
 - Fluxograma do menu (desatualizado):  
   https://www.canva.com/design/DAHEa11wZ6k/cTQVT0mOsx51UWbOSEnmmg/edit
 
-- Fluxograma do novo menu (ainda não implementado):  
+- Fluxograma do novo menu (atual):  
   https://www.canva.com/design/DAHIJxW1Yr4/8hzZ8onuWrnFTequOh2Z0g/edit
 
 ---
 
 ## Estrutura de Pastas 
-
-> **Observação:** As informações abaixo ainda estão desatualizadas, pois o menu será reformulado futuramente.
 
 <p>A pasta src é organizada em três subpastas e um arquivo principal, cada um com uma função específica dentro do sistema:</p>
 
