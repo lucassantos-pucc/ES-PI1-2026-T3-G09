@@ -36,7 +36,7 @@ def abrir_sistema_votacao():
     valido = buscar_mesario_para_abertura(titulo, cpf, chave)
 
     if not valido:
-        print("Falha na validação do mesário")
+        print("Falha na validação do mesário, CPF ou chave de acesso invalidas")
         registrar_log("ALERTA: Falha na validação do mesário para abrir votação.")
         return False
 
