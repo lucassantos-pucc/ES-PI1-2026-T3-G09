@@ -11,6 +11,10 @@ from utilidade_geral.boletim_de_urna import boletim_de_urna, estatistica_compare
 
 
 def menu_votacao():
+    """Exibe o menu de votacao.
+    
+    Permite abrir o sistema, votar, encerrar, acessar auditoria e resultados dos votos.
+    """
     opcao = ""
 
     while opcao != "0":
@@ -43,6 +47,10 @@ def menu_votacao():
 
 
 def menu_auditoria_votacao():
+    """Exibe o menu de auditoria da votacao.
+    
+    Permite exibir logs e protocolos de votacao.
+    """
     opcao = ""
 
     while opcao != "0":
@@ -66,7 +74,13 @@ def menu_auditoria_votacao():
             case _:
                 print("Opção inválida")
 
+
 def menu_resultado_votacao():
+    """Exibe o menu de resultados da votacao.
+    
+    Da acesso ao boletim da urna, estatistica de comparecimento,
+    votos por partido e validacao de integridade.
+    """
     opcao = ""
 
     while opcao != "0":

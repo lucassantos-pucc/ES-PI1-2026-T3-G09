@@ -7,6 +7,10 @@ from menus.eleitor import (
 
 
 def menu_gerenciamento():
+    """Exibe o menu principal de gerenciamento.
+    
+    Da acesso o gerenciamento de eleitores e candidatos.
+    """
     opcao = ""
 
     while opcao != "0":
@@ -30,6 +34,10 @@ def menu_gerenciamento():
 
 
 def gerenciar_eleitores():
+    """Exibe o menu de gerenciamento de eleitores.
+    
+    Permite cadastrar, editar, remover e buscar eleitores.
+    """
     opcao = ""
 
     while opcao != "0":
@@ -59,5 +67,5 @@ def gerenciar_eleitores():
 
 
 def gerenciar_candidatos():
+    """ainda nao foi implementado"""
     print("\nGerenciamento de candidatos ainda não está implementado na lógica atual.")
-

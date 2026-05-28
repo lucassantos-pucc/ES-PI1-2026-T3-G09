@@ -9,9 +9,12 @@ from criptografia.criptografia_chave_de_acesso import codificar_chave_de_acesso,
 
 
 
-
-
 def cadastrar_eleitor():
+    """Cadastra um novo eleitor no sistema.
+    
+    Solicita nome,cpf,título de eleitor e valida os dados
+    
+    """
     print("\n===== CADASTRAR ELEITOR =====")
 
     nome_completo = input("Digite o nome completo: ")
@@ -60,9 +63,12 @@ def cadastrar_eleitor():
     print("Cadastro realizado com sucesso!")
 
 
-
-
 def editar_eleitor():
+    """Edita o cadastro de um eleitor ja registrado.
+    
+    Busca o eleitor pelo título, cpf e chave de acesso,
+    solicita os novos dados, valida e atualiza no banco.
+    """
     print("\n===== EDITAR CADASTRO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -115,6 +121,11 @@ def editar_eleitor():
 
 
 def excluir_eleitor():
+    """Exclui o cadastro de um eleitor do sistema.
+    
+    Busca o eleitor pelo titulo, cpf e chave de acesso,
+    exibe os dados e solicita confirmacao antes de excluir.
+    """
     print("\n===== EXCLUIR CADASTRO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -145,6 +156,11 @@ def excluir_eleitor():
 
 
 def buscar_eleitor():
+    """Busca e exibe os dados de um eleitor cadastrado.
+    
+    Busca o eleitor pelo titulo, cpf,chave de acesso
+    e exibe os dados na tela.
+    """
     print("\n===== BUSCAR CADASTRO =====")
 
     titulo = input("Digite o título de eleitor: ")

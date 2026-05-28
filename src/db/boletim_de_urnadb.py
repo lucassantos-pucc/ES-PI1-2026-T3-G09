@@ -34,6 +34,12 @@ def boletim_de_urna_busca_banco():
 
 
 def estatistica_comparecimento_busca_banco():
+    """Busca os dados de comparecimento no banco de dados.
+    
+    Return:
+        resultado : retorna uma tupla em que o primeiro é o total
+        de eleitores cadastrados e o segundo é o total de eleitores que votaram.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 

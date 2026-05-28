@@ -2,6 +2,11 @@ from conector.conexao_banco import conectar
 
 
 def inserir_voto(numero_candidato, id_sessao, data_hora, protocolo):
+    """Insere um voto no banco de dados.
+
+    Recebe o numero do candidato, o id da sessao, a data e hora
+    do voto e o protocolo gerado é salvo no banco.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -26,6 +31,10 @@ def inserir_voto(numero_candidato, id_sessao, data_hora, protocolo):
 
 
 def listar_protocolos_votacao():
+    """Lista todos os protocolos de votacao registrados.
+
+    Retorna todos os votos por data e hora(decrescente).
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -42,4 +51,3 @@ def listar_protocolos_votacao():
     conexao.close()
 
     return resultado
-

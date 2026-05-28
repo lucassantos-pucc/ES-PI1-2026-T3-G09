@@ -20,6 +20,11 @@ from db.votarbd import inserir_voto, listar_protocolos_votacao
 
 
 def abrir_sistema_votacao():
+    """Abre o sistema de votacao.
+    
+    Valida o mesario, verifica se já existe sessao aberta,
+    reseta os votos pela zerézima e inicia uma nova sessao de votacao.
+    """
     print("\n===== ABRIR SISTEMA DE VOTAÇÃO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -61,6 +66,11 @@ def abrir_sistema_votacao():
 
 
 def votar():
+    """Registra o voto do eleitor.
+    
+    Valida o eleitor, verifica se existe uma sessao aberta e
+    verifica se o eleitor já votou e registra o voto e cria o protocolo.
+    """
     print("\n===== VOTAR =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -111,6 +121,11 @@ def votar():
 
 
 def encerrar_sistema_votacao():
+    """Encerra o sistema de votacao.
+    
+    Valida o mesario, verifica se existe sessão aberta
+    e encerra a sessão de votacao.
+    """
     print("\n===== ENCERRAR SISTEMA DE VOTAÇÃO =====")
 
     titulo = input("Digite o título de eleitor: ")
@@ -148,10 +163,15 @@ def encerrar_sistema_votacao():
 
 
 def auditoria_votacao():
+    """Exibe os resultados da votacao."""
     print("Exibindo resultados da votação...")
 
 
 def protocolo():
+    """Lista todos os protocolos de votacao registrados.
+    
+    Busca os protocolos no banco e exibe os dados de cada voto registrado.
+    """
     protocolos = listar_protocolos_votacao()
 
     if not protocolos:
@@ -168,4 +188,5 @@ def protocolo():
 
 
 def resultados_votacao():
+    """Exibe os resultados da votacao."""
     print("Exibindo resultados da votação...")
