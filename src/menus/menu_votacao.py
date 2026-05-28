@@ -1,5 +1,5 @@
 from utilidade_geral.auditoria import exibir_logs
-from db.boletim_de_urnadb import boletim_de_urna_busca_banco, estatistica_comparecimento_busca_banco
+from db.boletim_de_urnadb import boletim_de_urna_busca_banco, estatistica_comparecimento_busca_banco, declarar_vencedor_busca_banco
 from menus.sistema_votacao import (
     abrir_sistema_votacao,
     encerrar_sistema_votacao,
@@ -7,7 +7,7 @@ from menus.sistema_votacao import (
     resultados_votacao as resultado_base,
     votar,
 )
-from utilidade_geral.boletim_de_urna import boletim_de_urna, estatistica_comparecimento
+from utilidade_geral.boletim_de_urna import boletim_de_urna, estatistica_comparecimento, declarar_vencedor
 
 
 def menu_votacao():
@@ -89,6 +89,7 @@ def menu_resultado_votacao():
         print("2 - ESTATISTICA DE COMPARECIMENTO")
         print("3 - VOTOS POR PARTIDO")
         print("4 - VALIDACAO DE INTEGRIDADE")
+        print("5 - DECLARACAO DO VENCEDOR DA ELEICAO")
         print("0 - VOLTAR")
 
         opcao = input("Escolha uma opção: ")
@@ -104,8 +105,10 @@ def menu_resultado_votacao():
             case "3":
                 pass
             case "4":
-                pass
                 resultado_base()
+            case "5":
+                resultado = declarar_vencedor_busca_banco()
+                declarar_vencedor(resultado)
             case "0":
                 pass
             case _:
