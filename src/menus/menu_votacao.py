@@ -1,5 +1,5 @@
 from utilidade_geral.auditoria import exibir_logs
-from db.boletim_de_urnadb import boletim_de_urna_busca_banco, estatistica_comparecimento_busca_banco, declarar_vencedor_busca_banco
+from db.boletim_de_urnadb import boletim_de_urna_busca_banco, estatistica_comparecimento_busca_banco, declarar_vencedor_busca_banco, votos_por_partido
 from menus.sistema_votacao import (
     abrir_sistema_votacao,
     encerrar_sistema_votacao,
@@ -88,8 +88,8 @@ def menu_resultado_votacao():
     opcao = ""
 
     while opcao != "0":
-        print("\n===== MENU DO RESULTADO DA VOTACAO =====")
-        print("1 - BOLETIM DA URNA")
+        print("\n===== BOLETIM DE URNA =====")
+        print("1 - VOTOS EM ORDEM ALFABETICA")
         print("2 - ESTATISTICA DE COMPARECIMENTO")
         print("3 - VOTOS POR PARTIDO")
         print("4 - VALIDACAO DE INTEGRIDADE")
@@ -107,7 +107,7 @@ def menu_resultado_votacao():
                 resultado = estatistica_comparecimento_busca_banco()
                 estatistica_comparecimento(resultado)
             case "3":
-                pass
+                votos_por_partido()
             case "4":
                 resultado_base()
             case "5":

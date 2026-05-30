@@ -91,3 +91,31 @@ def declarar_vencedor_busca_banco():
     conexao.close()
 
     return resultado  # Retorna None automaticamente se a tabela estiver vazia
+
+def votos_por_partido():
+    """Consulta e exibe o total de votos agrupado por partido."""
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT c.partido, COUNT(v.numero_candidato) AS total_votos
+        FROM voto v
+        JOIN candidato c ON v.numero_candidato = c.numero
+        GROUP BY c.partido
+        ORDER BY total_votos DESC
+    """)
+
+    resultados = cursor.fetchall()
+
+    cursor.close()
+    conexao.close()
+
+    print("\n== VOTOS POR PARTIDO ==\n")
+
+    if not resultados:
+        print("Nenhum voto registrado.")
+        return
+
+    for partido, total in resultados:
+        print(f"{partido}: {total} voto(s)")
