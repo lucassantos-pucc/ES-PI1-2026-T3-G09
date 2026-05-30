@@ -170,9 +170,10 @@ def auditoria_votacao():
 
 
 def protocolo():
-    """Lista todos os protocolos de votacao registrados.
+    """Lista todos os protocolos de votacao registrados da ultima sessao.
     
-    Busca os protocolos no banco e exibe os dados de cada voto registrado.
+    Busca os protocolos no banco da sessao mais recente e exibe
+    o protocolo de cada voto registrado.
     """
     protocolos = listar_protocolos_votacao()
 
@@ -184,10 +185,7 @@ def protocolo():
 
     for item in protocolos:
         protocolo = decodificar_protocolo(item[4])
-        print(
-            f"Voto: {item[0]} | Candidato: {item[1]} | Sessão: {item[2]} | "
-            f"Data/Hora: {item[3]} | Protocolo: {protocolo}"
-        )
+        print(f"Protocolo: {protocolo}")
 
 
 def resultados_votacao():
