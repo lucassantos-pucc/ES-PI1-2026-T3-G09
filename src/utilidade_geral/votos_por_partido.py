@@ -1,12 +1,16 @@
-def votos_por_partido():
-    """Consulta e exibe o total de votos agrupado por partido."""
+from conector.conexao_banco import conectar
 
+
+def votos_por_partido():
+
+    conexao = conectar()
+    cursor = conexao.cursor()
 
     cursor.execute("""
-        SELECT partido, COUNT(*)
-        FROM votos
-        GROUP BY partido
-    """)
+        select c.partido, count(id_voto) as votos 
+                from candidato c inner join voto v on v.numero_candidato = c.numero 
+                group by partido;
+""")
 
     resultados = cursor.fetchall()
 
@@ -16,10 +20,8 @@ def votos_por_partido():
     for partido, total in resultados:
         print(f"{partido}: {total} voto(s)")
 
-votos_por_partido()
-
-cursor.close()
-conexao.close()
+    cursor.close()
+    conexao.close()
     
     
     
