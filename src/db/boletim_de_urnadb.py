@@ -63,6 +63,11 @@ def estatistica_comparecimento_busca_banco():
     return resultado
 
 def declarar_vencedor_busca_banco():
+    """Busca o número do candidato mais votado no banco de dados.
+
+    Returns:
+        int | None: Número do candidato vencedor ou None se não houver votos.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 

@@ -26,7 +26,12 @@ def boletim_de_urna(resultado):
     print("\nVotos nulos:", int(nulos))
 
 
-def estatistica_comparecimento(resultado):#falta ainda conectar com o banco de dados e fazer os imports
+def estatistica_comparecimento(resultado):
+    """Exibe as estatísticas de comparecimento da eleição.
+
+    Args:
+        resultado (tuple): Tupla com (total_eleitores, total_que_votaram).
+    """
     total_eleitores = resultado[0]
     total_votaram = resultado[1]
 
@@ -44,6 +49,11 @@ def estatistica_comparecimento(resultado):#falta ainda conectar com o banco de d
     print(f"Total que não votaram    : {nao_votaram} ({percentual_nao_votaram:.2f}%)")
 
 def declarar_vencedor(resultado):
+    """Exibe o vencedor da eleição.
+
+    Args:
+        resultado: Número do candidato mais votado retornado pelo banco.
+    """
     #vencedor, nome, num, partido, total_votos = resultado
     vencedor = resultado[0]
     

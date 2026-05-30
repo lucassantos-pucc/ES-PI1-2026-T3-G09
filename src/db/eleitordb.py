@@ -3,6 +3,16 @@ from criptografia.criptografia_cpf import codificar_cpf, decodificar_cpf
 from criptografia.criptografia_chave_de_acesso import codificar_chave_de_acesso, decodificar_chave_de_acesso
 
 def inserir_eleitor(nome_completo, cpf, titulo_eleitor, chave_acesso, eh_mesario, ja_votou):
+    """Insere um novo eleitor no banco de dados.
+
+    Args:
+        nome_completo (str): Nome completo do eleitor.
+        cpf (str): CPF criptografado do eleitor.
+        titulo_eleitor (str): Título de eleitor.
+        chave_acesso (str): Chave de acesso criptografada.
+        eh_mesario (bool): Indica se o eleitor é mesário.
+        ja_votou (bool): Indica se o eleitor já votou.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -28,6 +38,16 @@ def inserir_eleitor(nome_completo, cpf, titulo_eleitor, chave_acesso, eh_mesario
     conexao.close()
 
 def buscar_eleitor_por_cpf(titulo, cpf4, chave):
+    """Busca um eleitor pelo título, primeiros 4 dígitos do CPF e chave de acesso.
+
+    Args:
+        titulo (str): Título de eleitor.
+        cpf4 (str): Primeiros 4 dígitos do CPF.
+        chave (str): Chave de acesso em texto puro.
+
+    Returns:
+        tuple | None: Dados do eleitor ou None se não encontrado ou dados inválidos.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -58,6 +78,15 @@ def buscar_eleitor_por_cpf(titulo, cpf4, chave):
 
 
 def verificar_eleitor_existente(cpf, titulo):
+    """Verifica se já existe um eleitor com o CPF ou título informado.
+
+    Args:
+        cpf (str): CPF em texto puro.
+        titulo (str): Título de eleitor.
+
+    Returns:
+        tuple | None: Dados do eleitor encontrado ou None.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
     cpf_criptografado = codificar_cpf(cpf)
@@ -75,6 +104,16 @@ def verificar_eleitor_existente(cpf, titulo):
     return resultado
 
 def buscar_eleitor_ja_votou(titulo, cpf4, chave):
+    """Verifica se o eleitor já registrou voto na sessão atual.
+
+    Args:
+        titulo (str): Título de eleitor.
+        cpf4 (str): Primeiros 4 dígitos do CPF.
+        chave (str): Chave de acesso em texto puro.
+
+    Returns:
+        tuple | None: Dados do eleitor se já votou, None caso contrário.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -107,6 +146,16 @@ def buscar_eleitor_ja_votou(titulo, cpf4, chave):
     return None
 
 def marcar_eleitor_como_votou(titulo, cpf4, chave):
+    """Atualiza o status do eleitor para já votou.
+
+    Args:
+        titulo (str): Título de eleitor.
+        cpf4 (str): Primeiros 4 dígitos do CPF.
+        chave (str): Chave de acesso em texto puro.
+
+    Returns:
+        bool: True se atualizado com sucesso, False se eleitor não encontrado.
+    """
     eleitor = buscar_eleitor_por_cpf(titulo, cpf4, chave)
 
     if not eleitor:
@@ -130,6 +179,17 @@ def marcar_eleitor_como_votou(titulo, cpf4, chave):
     return True
 
 def atualizar_eleitor(nome_completo, cpf, titulo_eleitor, chave_acesso, eh_mesario, ja_votou, cpf_antigo):
+    """Atualiza os dados de um eleitor existente no banco.
+
+    Args:
+        nome_completo (str): Novo nome completo.
+        cpf (str): Novo CPF em texto puro.
+        titulo_eleitor (str): Novo título de eleitor.
+        chave_acesso (str): Nova chave de acesso em texto puro.
+        eh_mesario (bool): Indica se é mesário.
+        ja_votou (bool): Indica se já votou.
+        cpf_antigo (str): CPF criptografado atual usado como chave de busca.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -167,6 +227,11 @@ def atualizar_eleitor(nome_completo, cpf, titulo_eleitor, chave_acesso, eh_mesar
    
 
 def deletar_eleitor(cpf):
+    """Remove um eleitor do banco de dados pelo CPF criptografado.
+
+    Args:
+        cpf (str): CPF criptografado do eleitor a ser removido.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -182,6 +247,16 @@ def deletar_eleitor(cpf):
 
 
 def buscar_mesario_para_abertura(titulo_eleitor, cpf4, chave_acesso):
+    """Valida as credenciais de um mesário para abertura ou encerramento da votação.
+
+    Args:
+        titulo_eleitor (str): Título de eleitor do mesário.
+        cpf4 (str): Primeiros 4 dígitos do CPF.
+        chave_acesso (str): Chave de acesso em texto puro.
+
+    Returns:
+        tuple | None: Dados do mesário se válido, None caso contrário.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -213,6 +288,10 @@ def buscar_mesario_para_abertura(titulo_eleitor, cpf4, chave_acesso):
 
 
 def resetar_status_votacao_eleitores():
+    """Redefine o campo ja_votou de todos os eleitores para False.
+
+    Chamado na abertura de uma nova sessão de votação (zerésima).
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 

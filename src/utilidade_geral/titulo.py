@@ -1,4 +1,12 @@
 def validar_titulo(titulo):
+    """Valida um título de eleitor usando os dois dígitos verificadores.
+
+    Args:
+        titulo (str): Título de eleitor com 12 dígitos numéricos.
+
+    Returns:
+        bool: True se o título for válido, False caso contrário.
+    """
 
     if len(titulo) != 12 or not titulo.isdigit(): # verifica se tem 12 caracteres e se são todos numeros
         return False

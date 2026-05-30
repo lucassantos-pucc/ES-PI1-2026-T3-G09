@@ -1,0 +1,9 @@
+[2026-05-30 14:21:24] ALERTA: Falha na validação do mesário para abrir votação.
+[2026-05-30 14:22:08] ALERTA: Tentativa de voto com eleitor não encontrado ou dados inválidos.
+[2026-05-30 14:29:22] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.
+[2026-05-30 14:30:26] INFO: Eleitor cancelou o voto antes de confirmar.
+[2026-05-30 14:34:31] INFO: Eleitor cancelou o voto nulo.
+[2026-05-30 14:38:55] SUCESSO: Voto registrado. Protocolo: VVM261065374.
+[2026-05-30 14:44:36] ALERTA: Falha na validação do mesário para encerrar votação.
+[2026-05-30 14:45:08] ENCERRAMENTO: Votação finalizada com sucesso.
+[2026-05-30 14:48:27] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.

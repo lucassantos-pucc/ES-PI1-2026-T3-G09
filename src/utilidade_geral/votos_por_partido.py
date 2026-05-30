@@ -1,10 +1,6 @@
-from conector.conexao_banco import conectar
-
-
 def votos_por_partido():
+    """Consulta e exibe o total de votos agrupado por partido."""
 
-    conexao = conectar()
-    cursor = conexao.cursor()
 
     cursor.execute("""
         SELECT partido, COUNT(*)
@@ -20,8 +16,10 @@ def votos_por_partido():
     for partido, total in resultados:
         print(f"{partido}: {total} voto(s)")
 
-    cursor.close()
-    conexao.close()
+votos_por_partido()
+
+cursor.close()
+conexao.close()
     
     
     

@@ -1,6 +1,13 @@
 from conector.conexao_banco import conectar
 from datetime import datetime
 def inserir_sessao_votacao(aberta, data_abertura, data_encerramento):
+    """Insere uma nova sessão de votação no banco de dados.
+
+    Args:
+        aberta (bool): Indica se a sessão está aberta.
+        data_abertura (datetime): Data e hora de abertura.
+        data_encerramento (datetime | None): Data e hora de encerramento, ou None se ainda aberta.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -24,6 +31,11 @@ def inserir_sessao_votacao(aberta, data_abertura, data_encerramento):
 
 
 def buscar_sessao_aberta():
+    """Busca a sessão de votação atualmente aberta.
+
+    Returns:
+        tuple | None: Dados da sessão aberta ou None se não houver sessão ativa.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -43,6 +55,11 @@ def buscar_sessao_aberta():
 
 
 def encerrar_sessao_votacao(id_sessao):
+    """Encerra uma sessão de votação, marcando-a como fechada e registrando a data.
+
+    Args:
+        id_sessao (int): ID da sessão a ser encerrada.
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -69,6 +86,14 @@ def encerrar_sessao_votacao(id_sessao):
 
 
 def listar_zeresima_por_sessao(id_sessao):
+    """Lista todos os candidatos com total de votos na sessão informada (zerésima).
+
+    Args:
+        id_sessao (int): ID da sessão de votação.
+
+    Returns:
+        list[tuple]: Lista de tuplas com (nome, numero, partido, total_votos).
+    """
     conexao = conectar()
     cursor = conexao.cursor()
 

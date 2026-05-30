@@ -91,29 +91,58 @@ def votar():
                 print("Este eleitor já votou nesta sessão.")
                 registrar_log("ALERTA: Tentativa de voto duplo.")
             else:
-                numero_digitado = int(input("Digite o número do candidato: "))
-                candidato = buscar_candidato_por_numero(numero_digitado)
+                numero_digitado = int(input("Digite o número do candidato (0 para voto nulo): "))
 
-                if candidato:
-                    agora = datetime.now()
-                    protocolo = criar_protocolo_votacao(numero_digitado)
-                    protocoloCriptografado = codificar_protocolo(protocolo)
+                if numero_digitado == 0:
+                    print("\n===== ATENÇÃO =====")
+                    print("Você está prestes a registrar um VOTO NULO.")
+                    print("===================")
 
-                    inserir_voto(
-                        numero_digitado,
-                        id_sessao,
-                        agora,
-                        protocoloCriptografado
-                    )
+                    confirmar = input("\nConfirma que deseja votar NULO? (S/N): ").strip().upper()
 
-                    marcar_eleitor_como_votou(titulo, cpf4, chave)
+                    if confirmar != "S":
+                        print("Voto cancelado.")
+                        registrar_log("INFO: Eleitor cancelou o voto nulo.")
+                    else:
+                        agora = datetime.now()
+                        protocolo = criar_protocolo_votacao(None)
+                        protocoloCriptografado = codificar_protocolo(protocolo)
 
-                    print("Voto registrado com sucesso!")
-                    print(f"Protocolo de votação: {protocolo}")
-                    registrar_log(f"SUCESSO: Voto registrado. Protocolo: {protocolo}.")
+                        inserir_voto(None, id_sessao, agora, protocoloCriptografado)
+                        marcar_eleitor_como_votou(titulo, cpf4, chave)
+
+                        print("Voto NULO registrado com sucesso!")
+                        print(f"Protocolo de votação: {protocolo}")
+                        registrar_log(f"SUCESSO: Voto nulo registrado. Protocolo: {protocolo}.")
                 else:
-                    print("Candidato não existe.")
-                    registrar_log(f"ALERTA: Tentativa de voto em candidato inexistente: {numero_digitado}.")
+                    candidato = buscar_candidato_por_numero(numero_digitado)
+
+                    if candidato:
+                        print("\n===== CANDIDATO SELECIONADO =====")
+                        print(f"Nome:    {candidato[1]}")
+                        print(f"Número:  {candidato[2]}")
+                        print(f"Partido: {candidato[3]}")
+                        print("=================================")
+
+                        confirmar = input("\nConfirma seu voto neste candidato? (S/N): ").strip().upper()
+
+                        if confirmar != "S":
+                            print("Voto cancelado.")
+                            registrar_log("INFO: Eleitor cancelou o voto antes de confirmar.")
+                        else:
+                            agora = datetime.now()
+                            protocolo = criar_protocolo_votacao(numero_digitado)
+                            protocoloCriptografado = codificar_protocolo(protocolo)
+
+                            inserir_voto(numero_digitado, id_sessao, agora, protocoloCriptografado)
+                            marcar_eleitor_como_votou(titulo, cpf4, chave)
+
+                            print("Voto registrado com sucesso!")
+                            print(f"Protocolo de votação: {protocolo}")
+                            registrar_log(f"SUCESSO: Voto registrado. Protocolo: {protocolo}.")
+                    else:
+                        print("Candidato não existe.")
+                        registrar_log(f"ALERTA: Tentativa de voto em candidato inexistente: {numero_digitado}.")
         else:
             print("Não existe sessão aberta.")
             registrar_log("ALERTA: Tentativa de votar sem sessão aberta.")
@@ -171,7 +200,7 @@ def auditoria_votacao():
 
 def protocolo():
     """Lista todos os protocolos de votacao registrados da ultima sessao.
-    
+
     Busca os protocolos no banco da sessao mais recente e exibe
     o protocolo de cada voto registrado.
     """

@@ -13,10 +13,12 @@ def criar_protocolo_votacao(nCandidato):
     """
 
     # logica ------------------
-    
-    nCandidato = str(nCandidato)
 
-    digitos = nCandidato[0] + nCandidato[1] 
+    if nCandidato is None:
+        digitos = "00"
+    else:
+        nCandidato = str(nCandidato)
+        digitos = nCandidato[0] + nCandidato[1]
 
     alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     letra1 = alfabeto[random.randint(0, 25)]

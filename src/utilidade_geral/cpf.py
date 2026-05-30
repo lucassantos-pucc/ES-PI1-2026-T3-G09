@@ -1,4 +1,12 @@
 def validacao_cpf(cpf):
+    """Valida um CPF usando os dois dígitos verificadores.
+
+    Args:
+        cpf (str): CPF com 11 dígitos numéricos, sem pontos ou traços.
+
+    Returns:
+        bool: True se o CPF for válido, False caso contrário.
+    """
     # Cria uma função chamada validacao_cpf que recebe o CPF como parâmetro
 
 

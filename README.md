@@ -51,11 +51,9 @@ Este projeto consiste no desenvolvimento do backend de um sistema de votação d
 
 ## Estrutura de Pastas 
 
-<p>A pasta src é organizada em cinco subpastas e um arquivo principal, cada um com uma função específica dentro do sistema:</p>
+<p>A pasta src é organizada em três subpastas e um arquivo principal, cada um com uma função específica dentro do sistema:</p>
 
 - main.py: é o ponto de entrada da aplicação, responsável por iniciar o programa e coordenar sua execução.
 - menus: contém toda a lógica da interface com o usuário, incluindo exibição de opções, coleta de entradas e validação dos dados informados.
 - db: reúne as funções responsáveis pela interação com o banco de dados MySQL, sendo utilizada pelos módulos de menu para consultar, validar e armazenar informações.
 - conector: encarrega-se de estabelecer e gerenciar a conexão com o banco de dados, servindo de suporte para os demais módulos durante a execução do sistema.
-- utilidade geral: responsavel por armazenar diversos arquivos genericos importantes do sistema.
-- criptografia: reuno os arquivos de criptografia.

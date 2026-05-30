@@ -8,7 +8,7 @@ from menus.sistema_votacao import (
     votar,
 )
 from utilidade_geral.boletim_de_urna import boletim_de_urna, estatistica_comparecimento, declarar_vencedor
-from utilidade_geral.votos_por_partido import votos_por_partido
+from db.sessao_votacaodb import buscar_sessao_aberta
 
 
 def menu_votacao():
@@ -19,9 +19,12 @@ def menu_votacao():
     opcao = ""
 
     while opcao != "0":
+        sessao_aberta = buscar_sessao_aberta()
+
         print("\n===== MENU VOTACAO =====")
         print("1 - ABRIR SISTEMA VOTACAO")
-        print("2 - VOTAR")
+        if sessao_aberta:
+            print("2 - VOTAR")
         print("3 - ENCERRAR VOTACAO")
         print("4 - AUDITORIA VOTACAO")
         print("5 - RESULTADO DA VOTACAO")
@@ -33,7 +36,7 @@ def menu_votacao():
         match opcao:
             case "1":
                 abrir_sistema_votacao()
-            case "2":
+            case "2" if sessao_aberta:
                 votar()
             case "3":
                 encerrar_sistema_votacao()
@@ -104,7 +107,7 @@ def menu_resultado_votacao():
                 resultado = estatistica_comparecimento_busca_banco()
                 estatistica_comparecimento(resultado)
             case "3":
-                votos_por_partido()
+                pass
             case "4":
                 resultado_base()
             case "5":
