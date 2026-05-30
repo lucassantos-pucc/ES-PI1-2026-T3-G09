@@ -217,6 +217,6 @@ def protocolo():
         print(f"Protocolo: {protocolo}")
 
 
-def resultados_votacao():
+def validacao_integridade():
     """Exibe os resultados da votacao."""
     print("Exibindo resultados da votação...")

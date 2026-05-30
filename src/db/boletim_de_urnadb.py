@@ -119,3 +119,27 @@ def votos_por_partido():
 
     for partido, total in resultados:
         print(f"{partido}: {total} voto(s)")
+
+def validacao_integridade():
+    """Compara o total de votos registrados com eleitores que já votaram."""
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM voto")
+    total_votos = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM eleitor WHERE ja_votou = 1")
+    total_ja_votou = cursor.fetchone()[0]
+
+    cursor.close()
+    conexao.close()
+
+    print("\n== VALIDACAO DE INTEGRIDADE ==")
+    print(f"Votos na urna : {total_votos}")
+    print(f"Ja votou      : {total_ja_votou}")
+
+    if total_votos == total_ja_votou:
+        print("OK - Integridade confirmada.")
+    else:
+        print(f"ATENCAO - Diferenca de {abs(total_votos - total_ja_votou)} registro(s).")

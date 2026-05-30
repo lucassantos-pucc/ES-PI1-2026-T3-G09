@@ -1,10 +1,9 @@
 from utilidade_geral.auditoria import exibir_logs
-from db.boletim_de_urnadb import boletim_de_urna_busca_banco, estatistica_comparecimento_busca_banco, declarar_vencedor_busca_banco, votos_por_partido
+from db.boletim_de_urnadb import boletim_de_urna_busca_banco, estatistica_comparecimento_busca_banco, declarar_vencedor_busca_banco, votos_por_partido, validacao_integridade
 from menus.sistema_votacao import (
     abrir_sistema_votacao,
     encerrar_sistema_votacao,
     protocolo,
-    resultados_votacao as resultado_base,
     votar,
 )
 from utilidade_geral.boletim_de_urna import boletim_de_urna, estatistica_comparecimento, declarar_vencedor
@@ -109,7 +108,7 @@ def menu_resultado_votacao():
             case "3":
                 votos_por_partido()
             case "4":
-                resultado_base()
+                validacao_integridade()
             case "5":
                 resultado = declarar_vencedor_busca_banco()
                 declarar_vencedor(resultado)
