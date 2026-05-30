@@ -1,0 +1,184 @@
+from conector.conexao_banco import conectar
+from db.eleitordb import inserir_eleitor, atualizar_eleitor, deletar_eleitor
+from db.eleitordb import buscar_eleitor_por_cpf,verificar_eleitor_existente
+from utilidade_geral.cpf import validacao_cpf
+from utilidade_geral.titulo import validar_titulo
+from utilidade_geral.chave_de_acesso import criar_chave_de_acesso
+from criptografia.criptografia_cpf import codificar_cpf, decodificar_cpf
+from criptografia.criptografia_chave_de_acesso import codificar_chave_de_acesso, decodificar_chave_de_acesso
+
+
+
+def cadastrar_eleitor():
+    """Cadastra um novo eleitor no sistema.
+    
+    Solicita nome,cpf,título de eleitor e valida os dados
+    
+    """
+    print("\n===== CADASTRAR ELEITOR =====")
+
+    nome_completo = input("Digite o nome completo: ")
+
+    while " " not in nome_completo.strip():
+        nome_completo = input("Nome incompleto. Digite o nome completo: ")
+
+    cpf = input("Digite o CPF (11 dígitos): ")
+
+    while not validacao_cpf(cpf):
+        cpf = input("CPF inválido. Digite novamente o CPF (11 dígitos): ")
+
+    titulo = input("Digite o título de eleitor: ")
+
+    while not validar_titulo(titulo):
+        titulo = input("Título inválido. Digite novamente o título de eleitor: ")
+
+    eleitor_existente = verificar_eleitor_existente(cpf, titulo)
+
+    if eleitor_existente:
+        print("Já existe um eleitor cadastrado com esse CPF ou título.")
+        return
+
+    chave_acesso = criar_chave_de_acesso(nome_completo)
+
+    print(f"Chave de acesso gerada: {chave_acesso}")
+
+    confirmar = input("Confirmar cadastro? (S/N): ")
+
+    if confirmar.upper() != "S":
+        print("Cadastro cancelado.")
+        return
+
+    cpf_criptografado = codificar_cpf(cpf)
+    chave_criptografado = codificar_chave_de_acesso(chave_acesso)
+
+    inserir_eleitor(
+        nome_completo,
+        cpf_criptografado,
+        titulo,
+        chave_criptografado,
+        False,
+        False
+    )
+
+    print("Cadastro realizado com sucesso!")
+
+
+def editar_eleitor():
+    """Edita o cadastro de um eleitor ja registrado.
+    
+    Busca o eleitor pelo título, cpf e chave de acesso,
+    solicita os novos dados, valida e atualiza no banco.
+    """
+    print("\n===== EDITAR CADASTRO =====")
+
+    titulo = input("Digite o título de eleitor: ")
+    cpf4 = input("Digite os 4 primeiros dígitos do CPF: ")
+    chave = input("Digite a chave de acesso: ")
+
+    eleitor = buscar_eleitor_por_cpf(titulo, cpf4, chave)
+
+    if not eleitor:
+        print("Eleitor não encontrado ou dados inválidos.")
+        return
+    cpf_descriptografado= decodificar_cpf(eleitor[2])
+    chave_descriptografado= decodificar_chave_de_acesso(eleitor[4])
+
+    print(f"Nome atual: {eleitor[1]}")
+    print(f"CPF atual: {cpf_descriptografado}")
+    print(f"Título atual: {eleitor[3]}")
+    print(f"Chave atual: {chave_descriptografado}")
+
+    nome_completo = input("Digite o novo nome completo: ")
+    cpf = input("Digite o novo CPF: ")
+    titulo_novo = input("Digite o novo título de eleitor: ")
+
+    cpf_valido = validacao_cpf(cpf)
+    titulo_valido = validar_titulo(titulo_novo)
+
+    if titulo_valido:
+        if cpf_valido:
+
+            nova_chave = criar_chave_de_acesso(nome_completo)
+
+            atualizar_eleitor(
+                nome_completo,
+                cpf,
+                titulo_novo,
+                nova_chave,
+                eleitor[5],
+                eleitor[6],
+                eleitor[2]
+            )
+
+            print("Cadastro atualizado com sucesso!")
+            print("Nova chave de acesso gerada:", nova_chave)
+
+        else:
+            print("CPF inválido. Edição não realizado.")
+
+    else:
+        print("Título de eleitor inválido. Edição não realizado.")
+
+
+def excluir_eleitor():
+    """Exclui o cadastro de um eleitor do sistema.
+    
+    Busca o eleitor pelo titulo, cpf e chave de acesso,
+    exibe os dados e solicita confirmacao antes de excluir.
+    """
+    print("\n===== EXCLUIR CADASTRO =====")
+
+    titulo = input("Digite o título de eleitor: ")
+    cpf4 = input("Digite os 4 primeiros dígitos do CPF: ")
+    chave = input("Digite a chave de acesso: ")
+
+    eleitor = buscar_eleitor_por_cpf(titulo, cpf4, chave)
+
+    if not eleitor:
+        print("Eleitor não encontrado ou dados inválidos.")
+        return
+    cpf_descriptografado= decodificar_cpf(eleitor[2])
+    chave_descriptografado= decodificar_chave_de_acesso(eleitor[4])
+
+
+    print(f"Nome: {eleitor[1]}")
+    print(f"CPF: {cpf_descriptografado}")
+    print(f"Título: {eleitor[3]}")
+    print(f"Chave de Acesso: {chave_descriptografado}")
+
+    confirmar = input("Tem certeza que deseja excluir? (S/N): ")
+
+    if confirmar.upper() == "S":
+        deletar_eleitor(eleitor[2])
+        print("Cadastro excluído!")
+    else:
+        print("Exclusão cancelada.")
+
+
+def buscar_eleitor():
+    """Busca e exibe os dados de um eleitor cadastrado.
+    
+    Busca o eleitor pelo titulo, cpf,chave de acesso
+    e exibe os dados na tela.
+    """
+    print("\n===== BUSCAR CADASTRO =====")
+
+    titulo = input("Digite o título de eleitor: ")
+    cpf4 = input("Digite os 4 primeiros dígitos do CPF: ")
+    chave = input("Digite a chave de acesso: ")
+
+    eleitor = buscar_eleitor_por_cpf(titulo, cpf4, chave)
+
+    if eleitor:
+        cpf_original = decodificar_cpf(eleitor[2])
+        chave_original = decodificar_chave_de_acesso(eleitor[4])
+
+        print("\n===== DADOS DO ELEITOR =====")
+        print(f"Nome: {eleitor[1]}")
+        print(f"CPF: {cpf_original}")
+        print(f"Título: {eleitor[3]}")
+        print(f"Chave de acesso: {chave_original}")
+        print(f"É mesário: {eleitor[5]}")
+        print(f"Já votou: {eleitor[6]}")
+    else:
+        print("Eleitor não encontrado ou dados inválidos.")
