@@ -8,6 +8,7 @@ from menus.sistema_votacao import (
     votar,
 )
 from utilidade_geral.boletim_de_urna import boletim_de_urna, estatistica_comparecimento, declarar_vencedor
+from utilidade_geral.votos_por_partido import votos_por_partido
 
 
 def menu_votacao():
@@ -103,7 +104,7 @@ def menu_resultado_votacao():
                 resultado = estatistica_comparecimento_busca_banco()
                 estatistica_comparecimento(resultado)
             case "3":
-                pass
+                votos_por_partido()
             case "4":
                 resultado_base()
             case "5":

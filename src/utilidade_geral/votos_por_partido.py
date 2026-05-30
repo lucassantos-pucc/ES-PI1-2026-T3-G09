@@ -1,5 +1,10 @@
+from conector.conexao_banco import conectar
+
+
 def votos_por_partido():
 
+    conexao = conectar()
+    cursor = conexao.cursor()
 
     cursor.execute("""
         SELECT partido, COUNT(*)
@@ -15,10 +20,8 @@ def votos_por_partido():
     for partido, total in resultados:
         print(f"{partido}: {total} voto(s)")
 
-votos_por_partido()
-
-cursor.close()
-conexao.close()
+    cursor.close()
+    conexao.close()
     
     
     
