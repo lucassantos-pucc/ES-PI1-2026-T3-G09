@@ -63,31 +63,31 @@ def estatistica_comparecimento_busca_banco():
     return resultado
 
 def declarar_vencedor_busca_banco():
-    """Busca o número do candidato mais votado no banco de dados.
+    """Busca os dados completos do candidato mais votado no banco de dados.
 
     Returns:
-        int | None: Número do candidato vencedor ou None se não houver votos.
+        tuple | None: Tupla com (nome, numero, partido, total_votos) ou None se não houver votos.
     """
     conexao = conectar()
     cursor = conexao.cursor()
 
-    # Query para agrupar, contar e ordenar pelo mais votado
     sql = """
-        SELECT numero_candidato 
-        FROM voto 
-        GROUP BY numero_candidato 
-        ORDER BY COUNT(*) DESC 
+        SELECT 
+            c.nome,
+            c.numero,
+            c.partido,
+            COUNT(v.numero_candidato) AS total_votos
+        FROM voto v
+        JOIN candidato c ON v.numero_candidato = c.numero
+        GROUP BY v.numero_candidato, c.nome, c.numero, c.partido
+        ORDER BY total_votos DESC
         LIMIT 1
     """
 
     cursor.execute(sql)
-    resultado_tupla = cursor.fetchone() # Retorna algo como (10,)
+    resultado = cursor.fetchone()  # Retorna algo como ('Paulo Henrique Bernardes', 101, 'PDT', 5)
 
     cursor.close()
     conexao.close()
 
-    # Se a tabela não estiver vazia, retorna o valor dentro da tupla
-    if resultado_tupla:
-        return resultado_tupla[0]
-    
-    return None
+    return resultado  # Retorna None automaticamente se a tabela estiver vazia
