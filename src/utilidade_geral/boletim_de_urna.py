@@ -49,17 +49,47 @@ def estatistica_comparecimento(resultado):
     print(f"Total que não votaram    : {nao_votaram} ({percentual_nao_votaram:.2f}%)")
 
 def declarar_vencedor(resultado):
-    """Exibe o vencedor da eleição.
+    """Exibe o vencedor da eleição no terminal.
 
     Args:
-        resultado: Número do candidato mais votado retornado pelo banco.
+        resultado (tuple | None): Tupla com (nome, numero, partido, total_votos)
+                                  retornada por declarar_vencedor_busca_banco(),
+                                  ou None se não houver votos registrados.
     """
-    #vencedor, nome, num, partido, total_votos = resultado
-    vencedor = resultado[0]
+    if resultado is None:
+        print("Nenhum voto registrado. Nao e possivel declarar um vencedor.")
+        return
+
+    nome, numero, partido, total_votos = resultado
+
+    print("=" * 40)
+    print("       RESULTADO DA ELEICAO")
+    print("=" * 40)
+    print(f"Vencedor : {nome}")
+    print(f"Numero   : {numero}")
+    print(f"Partido  : {partido}")
+    print(f"Votos    : {total_votos}")
+    print("=" * 40)
     
-    print(f"Vencedor da eleicao: {vencedor}")
-    #print(f"Nome: {nome}")
-    #print(f"Numero: {num}")
-    #print(f"partido: {partido}")
-    #print(f"Total de votos Obtidos: {total_votos}")
-    
+def votos_por_partido():
+    """Consulta e exibe o total de votos agrupado por partido."""
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT partido, COUNT(*)
+        FROM votos
+        GROUP BY partido
+    """)
+
+    resultados = cursor.fetchall()
+
+    print("\n== VOTOS POR PARTIDO ==\n")
+
+
+    for partido, total in resultados:
+        print(f"{partido}: {total} voto(s)")
+
+    cursor.close()
+    conexao.close()
