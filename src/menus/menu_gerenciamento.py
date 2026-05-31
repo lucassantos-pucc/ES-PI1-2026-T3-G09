@@ -5,6 +5,8 @@ from menus.eleitor import (
     excluir_eleitor,
 )
 
+from db.eleitordb import listar_eleitor 
+
 
 def menu_gerenciamento():
     """Exibe o menu principal de gerenciamento.
@@ -46,6 +48,7 @@ def gerenciar_eleitores():
         print("2 - EDITAR ELEITOR")
         print("3 - REMOVER ELEITOR")
         print("4 - BUSCAR POR CPF OU TITULO")
+        print("5 - LISTAR ELEITORES")
         print("0 - VOLTAR")
 
         opcao = input("Escolha uma opção: ")
@@ -60,6 +63,8 @@ def gerenciar_eleitores():
                 excluir_eleitor()
             case "4":
                 buscar_eleitor()
+            case "5":
+                listar_eleitor()
             case "0":
                 pass
             case _:

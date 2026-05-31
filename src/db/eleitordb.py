@@ -305,3 +305,47 @@ def resetar_status_votacao_eleitores():
 
     cursor.close()
     conexao.close()
+
+def listar_eleitor():
+
+    """
+    Lista todos os eleitores cadastrados no banco de dados.
+
+    """
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+    sql = """
+        select nome_completo, cpf, titulo_eleitor, chave_acesso, eh_mesario, ja_votou
+        from eleitor
+        order by nome_completo;
+
+    """
+
+    cursor.execute(sql)
+    
+    retorno = cursor.fetchall()
+    print("-"*50 + "ELEITORES" + "-"*50 + "\n")
+    for item in retorno:
+        nome = item[0]
+        cpf = item[1]
+        titulo = item[2]
+        chave = item[3]
+        mesario = ""
+        javotou = ""
+
+        if(item[4] == True):
+            mesario = "sim"
+        else:
+            mesario = "nao"
+        if(item[5] == True):
+            javotou = "sim"
+        else:
+            javotou = "nao"
+        
+        
+        print(f"{nome:30} {cpf:15} {titulo:15} {chave:12} {mesario:10} {javotou:10}")
+
+
+    cursor.close()
+    conexao.close()
