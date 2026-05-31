@@ -30,6 +30,31 @@ def inserir_sessao_votacao(aberta, data_abertura, data_encerramento):
     conexao.close()
 
 
+def buscar_id_sessao_mais_recente():
+    """Retorna o id da sessão de votação mais recente.
+
+    Returns:
+        int | None: ID da última sessão registrada ou None se não houver sessões.
+    """
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    sql = """
+    SELECT id_sessao
+    FROM sessao_votacao
+    ORDER BY id_sessao DESC
+    LIMIT 1
+    """
+
+    cursor.execute(sql)
+    resultado = cursor.fetchone()
+
+    cursor.close()
+    conexao.close()
+
+    return resultado[0] if resultado else None
+
+
 def buscar_sessao_aberta():
     """Busca a sessão de votação atualmente aberta.
 

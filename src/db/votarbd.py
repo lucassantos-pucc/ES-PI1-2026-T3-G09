@@ -1,4 +1,5 @@
 from conector.conexao_banco import conectar
+from db.sessao_votacaodb import buscar_id_sessao_mais_recente
 
 
 def inserir_voto(numero_candidato, id_sessao, data_hora, protocolo):
@@ -31,20 +32,26 @@ def inserir_voto(numero_candidato, id_sessao, data_hora, protocolo):
 
 
 def listar_protocolos_votacao():
-    """Lista todos os protocolos de votacao registrados.
+    """Lista os protocolos de votacao da sessao mais recente.
 
-    Retorna todos os votos por data e hora(decrescente).
+    Retorna os votos da ultima sessao por data e hora (decrescente).
     """
+    id_sessao = buscar_id_sessao_mais_recente()
+
+    if id_sessao is None:
+        return []
+
     conexao = conectar()
     cursor = conexao.cursor()
 
     sql = """
     SELECT id_voto, numero_candidato, id_sessao, data_hora, protocolo
     FROM voto
+    WHERE id_sessao = %s
     ORDER BY data_hora DESC
     """
 
-    cursor.execute(sql)
+    cursor.execute(sql, (id_sessao,))
     resultado = cursor.fetchall()
 
     cursor.close()

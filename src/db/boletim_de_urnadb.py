@@ -1,4 +1,6 @@
 from conector.conexao_banco import conectar
+from db.sessao_votacaodb import buscar_id_sessao_mais_recente
+
 
 def boletim_de_urna_busca_banco():
     """
@@ -8,21 +10,35 @@ def boletim_de_urna_busca_banco():
         resultado (list): retorna uma lista onde o primeiro elemento é uma lista de tuplas
         com os votos válidos e o segundo elemento é uma tupla contendo os votos nulos (null).
     """
+    id_sessao = buscar_id_sessao_mais_recente()
+
+    if id_sessao is None:
+        return [[], (0,)]
+
     conexao = conectar()
     cursor = conexao.cursor()
 
-    #primeira query faz a consulta com inner join e group by e retorna: nome, numero, partido e votos
-    sql = "select nome, numero, partido, count(voto.id_voto) as votos from candidato inner join voto on voto.numero_candidato = candidato.numero group by nome, numero, partido order by nome;"
-    
-    #segunda query faz a consulta de votos nulos (null)
-    sql2 = "select count(*) AS votos_nulos from voto where numero_candidato is null;"
-    
-    cursor.execute(sql)
-    
+    sql = """
+    SELECT c.nome, c.numero, c.partido, COUNT(v.id_voto) AS votos
+    FROM candidato c
+    INNER JOIN voto v
+        ON v.numero_candidato = c.numero
+        AND v.id_sessao = %s
+    GROUP BY c.nome, c.numero, c.partido
+    ORDER BY c.nome
+    """
+
+    sql2 = """
+    SELECT COUNT(*) AS votos_nulos
+    FROM voto
+    WHERE numero_candidato IS NULL
+        AND id_sessao = %s
+    """
+
+    cursor.execute(sql, (id_sessao,))
     votos = cursor.fetchall()
 
-    cursor.execute(sql2)
-
+    cursor.execute(sql2, (id_sessao,))
     nullos = cursor.fetchone()
 
     resultado = [votos,nullos]
@@ -68,6 +84,11 @@ def declarar_vencedor_busca_banco():
     Returns:
         tuple | None: Tupla com (nome, numero, partido, total_votos) ou None se não houver votos.
     """
+    id_sessao = buscar_id_sessao_mais_recente()
+
+    if id_sessao is None:
+        return None
+
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -79,12 +100,13 @@ def declarar_vencedor_busca_banco():
             COUNT(v.numero_candidato) AS total_votos
         FROM voto v
         JOIN candidato c ON v.numero_candidato = c.numero
+        WHERE v.id_sessao = %s
         GROUP BY v.numero_candidato, c.nome, c.numero, c.partido
         ORDER BY total_votos DESC
         LIMIT 1
     """
 
-    cursor.execute(sql)
+    cursor.execute(sql, (id_sessao,))
     resultado = cursor.fetchone()  # Retorna algo como ('Paulo Henrique Bernardes', 101, 'PDT', 5)
 
     cursor.close()
@@ -95,6 +117,13 @@ def declarar_vencedor_busca_banco():
 def votos_por_partido():
     """Consulta e exibe o total de votos agrupado por partido."""
 
+    id_sessao = buscar_id_sessao_mais_recente()
+
+    if id_sessao is None:
+        print("\n== VOTOS POR PARTIDO ==\n")
+        print("Nenhum voto registrado.")
+        return
+
     conexao = conectar()
     cursor = conexao.cursor()
 
@@ -102,9 +131,10 @@ def votos_por_partido():
         SELECT c.partido, COUNT(v.numero_candidato) AS total_votos
         FROM voto v
         JOIN candidato c ON v.numero_candidato = c.numero
+        WHERE v.id_sessao = %s
         GROUP BY c.partido
         ORDER BY total_votos DESC
-    """)
+    """, (id_sessao,))
 
     resultados = cursor.fetchall()
 
@@ -123,10 +153,17 @@ def votos_por_partido():
 def validacao_integridade():
     """Compara o total de votos registrados com eleitores que já votaram."""
 
+    id_sessao = buscar_id_sessao_mais_recente()
+
+    if id_sessao is None:
+        print("\n== VALIDACAO DE INTEGRIDADE ==")
+        print("Nenhuma sessao de votacao registrada.")
+        return
+
     conexao = conectar()
     cursor = conexao.cursor()
 
-    cursor.execute("SELECT COUNT(*) FROM voto")
+    cursor.execute("SELECT COUNT(*) FROM voto WHERE id_sessao = %s", (id_sessao,))
     total_votos = cursor.fetchone()[0]
 
     cursor.execute("SELECT COUNT(*) FROM eleitor WHERE ja_votou = 1")
